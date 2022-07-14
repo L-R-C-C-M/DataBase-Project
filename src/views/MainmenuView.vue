@@ -1,14 +1,12 @@
-<!-- @author:刘睿萌-详情界面的模板 -->
-<!-- 菜单没写回调函数 -->
 <template>
-  <span>详情界面的模板</span>
-  <el-container class="detail-view" style="height:500px;">
-      <el-header style="height:55px;">
+<span>主界面的模板 <br /></span>
+  <el-container class="main-view" style="height:700px;">
+      <el-header style="height:200px;">
           <el-menu
             :default-active="activeIndex"
             class="up-menu"
             mode="horizontal"
-            background-color="#202741"
+            background-color="rgba(0, 0, 0, 0)"
             text-color="#FFFFFF"
             active-text-color="#2E74B6"
             :ellipsis="false"
@@ -42,26 +40,8 @@
   </el-container>
 </template>
 
-<script setup>
-//放一些引入的量  如const url =‘balabala'
-// import { ref } from 'vue'
-// const activeIndex = ref('1')
-// const handleSelect = (key: string, keyPath: string[]) => {
-//   console.log(key, keyPath)
-// }
-
-</script>
-
-
 <!-- css -->
 <style scoped>
-.detail-view .el-header {
-  background-color: #202741;
-  color: #FFFFFF;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
 .main-view .el-header {
   color: #FFFFFF;
   background-image:url("../../image/relevent-department.png") ;
