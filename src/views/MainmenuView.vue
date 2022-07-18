@@ -52,6 +52,9 @@
   width:100%;
   align-items: center;
 }
+.el-main{
+     background-color: #F4F6F9;
+}
 .el-footer {
   background-color: #202741;
   color:#dddcdc;
