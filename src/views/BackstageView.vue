@@ -1,5 +1,5 @@
 <!-- @author:杨嘉仪-后台管理界面的模板 -->
-<!-- 差图标和颜色 -->
+<!-- 差图标 -->
 <template>
   <el-container class="home-container" style="height:100%">
         <!-- 头部区 -->
@@ -12,7 +12,12 @@
               />
               <span>后台管理系统</span>
             </div>
-            <el-button type="info" @click="logout">退出</el-button>
+            <el-button class="exit-button" type="info" @click="logout">
+              <el-icon style="vertical-align: middle;">
+                <SwitchButton />
+              </el-icon>
+              <span> 退出 </span>
+            </el-button>
         </el-header>
         
         <!-- 页面主体区域 -->
@@ -47,12 +52,13 @@
 html,body{ height:100%; } 
 .home-container .el-header{
      background-color: #202741;
+     height:55px;
      display: flex; //设置显示为flex布局
      justify-content: space-between;//设置为flex左右布局
-     padding-left: 0;//左内边距为0（Logo贴左边）
-     align-items: center;//元素上下居中（防止右边按钮贴上下边）
-     color: #fff;
-     font-size: 20px;
+     padding-left: 30;//左内边距为20（Logo贴左边）
+     padding-right: 30;
+     align-items: center;//元素上下居中
+     color: #B5C4D0;
      > div {//内嵌的div样式
          display: flex;
          align-items: center;//Logo和文字上下居中

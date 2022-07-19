@@ -1,5 +1,5 @@
 {
-  "name": "vue_test1",
+  "name": "vue_demo2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,6 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.6",
+    "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "element-plus": "^2.2.9",
     "vue": "^3.2.13",
