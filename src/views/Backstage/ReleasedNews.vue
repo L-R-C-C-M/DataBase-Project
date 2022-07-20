@@ -1,9 +1,9 @@
-<!-- @author:何懿励-后台用户管理-普通用户 -->
+<!-- @author:何懿励-资讯管理-普通用户 -->
 <template>
   <el-header>
     <el-breadcrumb separator="/">
-    <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-    <el-breadcrumb-item>普通用户</el-breadcrumb-item>
+    <el-breadcrumb-item>资讯管理</el-breadcrumb-item>
+    <el-breadcrumb-item>已发布资讯</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
@@ -31,7 +31,7 @@
       <el-table-column prop= "report_num" label="举报数量" align="center"/>
       <el-table-column prop= "searchinfo_num" label="发布寻人信息数量" align="center"/>
       <el-table-column prop= "fundation_time" label="创建时间" align="center"/>
-      <el-table-column prop= "validate" label="账户禁用" align="center">
+      <el-table-column prop= "validate" label="账户" align="center">
         <template #default>
         <el-switch v-model="value1" />
         </template>

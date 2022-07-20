@@ -24,6 +24,26 @@ const routes = [
         name: 'userManagement',
         component: () => import('../views/Backstage/UserManagement.vue')
       },
+      {
+        path: 'volManagement',
+        name: 'volManagement',
+        component: () => import('../views/Backstage/VolManagement.vue')
+      },
+      {
+        path: 'releasedNews',
+        name: 'releasedNews',
+        component: () => import('../views/Backstage/ReleasedNews.vue')
+      },
+      {
+        path: 'volReview',
+        name: 'volReview',
+        component: () => import('../views/Backstage/VolReview.vue')
+      },
+      {
+        path: 'reports',
+        name: 'reports',
+        component: () => import('../views/Backstage/Reports.vue')
+      },
     ]
   },
   {

@@ -25,15 +25,15 @@
           <!-- 侧边栏 -->
           <BackstageSideBar/>
           <!-- 右侧内容主体 -->
-          <el-main>
+          <el-container style="height:100%" direction="vertical">
             <router-view/>
-          </el-main>
+          </el-container>
         </el-container>
     </el-container>
 </template>
  
 <script>
-  import BackstageSideBar from '@/components/BackstageSideBar'
+  import BackstageSideBar from '@/views/Backstage/BackstageSideBar'
   export default {
   name: 'BackstageView',
   components: {
@@ -52,7 +52,7 @@
 html,body{ height:100%; } 
 .home-container .el-header{
      background-color: #202741;
-     height:55px;
+     height:70px;
      display: flex; //设置显示为flex布局
      justify-content: space-between;//设置为flex左右布局
      padding-left: 30;//左内边距为20（Logo贴左边）

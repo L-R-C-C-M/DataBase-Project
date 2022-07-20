@@ -1,27 +1,43 @@
-<!-- @author:何懿励-后台用户管理-普通用户 -->
+<!-- @author:何懿励-处理举报-->
 <template>
   <el-header>
     <el-breadcrumb separator="/">
-    <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-    <el-breadcrumb-item>普通用户</el-breadcrumb-item>
+    <el-breadcrumb-item>处理举报</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
 
-  
-  <el-card>
-    <el-row :gutter="20">
-      <el-col :span="1">
-        <span style="text-align: center">搜索</span>
-      </el-col>
-      <el-col :span="7">
-        <el-input></el-input>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="primary" :icon="Search">search</el-button>
-      </el-col>
-    </el-row>
-  </el-card>
+   <el-row :gutter="60">
+    <el-col :span="5" >
+    <div style="background-color: rgba(42, 130, 228, 0.17)" class="card">
+    <div class="cicon">
+        <el-icon size="60" color="#000000" class="eicon">
+            <Document />
+        </el-icon>
+    </div>
+    <div style="padding-left:20px;">
+      <span style="font-size:large;">待处理<br/><br/></span>
+        <span style="font-size:xx-large;">23</span>
+    </div>
+    </div>
+    </el-col>
+
+    <el-col :span="5" >
+    <div style="background-color: rgba(4, 76, 144, 1)" class="card">
+      <div class="cicon">
+      <el-icon size="60" color="#FFFFFF" class="eicon">
+            <DocumentChecked />
+      </el-icon>
+      </div>
+      <div style="padding-left:20px;">
+        <span style="color: #FFFFFF;font-size:large;">已处理<br/><br/></span>
+        <span style="color: #FFFFFF;font-size:xx-large;">23</span>
+      </div>
+    </div>
+    
+    </el-col>
+  </el-row>
+
   <el-card>
       <el-table :data="tableData" style="width: 100%" header-align="center">
       <el-table-column type="selection" width="55" align="center"/>
@@ -31,7 +47,7 @@
       <el-table-column prop= "report_num" label="举报数量" align="center"/>
       <el-table-column prop= "searchinfo_num" label="发布寻人信息数量" align="center"/>
       <el-table-column prop= "fundation_time" label="创建时间" align="center"/>
-      <el-table-column prop= "validate" label="账户禁用" align="center">
+      <el-table-column prop= "validate" label="账户" align="center">
         <template #default>
         <el-switch v-model="value1" />
         </template>
@@ -77,19 +93,25 @@ export default {
      align-items: center;//元素上下居中
  }
  
-  .el-row {
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 4px;
-    height:80px;
-    align-items: center;//元素上下居中
-    margin-bottom: 20px;
-}
 .el-row:last-child {
   margin-bottom: 0;
 }
 .el-card{
 		margin-bottom:20px; //下边距
 	}
-
+.card{
+    height:160px;
+    margin-bottom :40px;
+    text-align: left;
+    display:flex;
+    align-items: center;
+}
+.cicon{
+    float:left;
+    padding-left:20px;
+}
+.eicon{
+    font-size: 80px;
+}
 </style>
  
