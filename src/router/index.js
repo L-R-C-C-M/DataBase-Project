@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import('../views/HomeView.vue')
   },
   {
     path: '/about',
@@ -18,7 +17,34 @@ const routes = [
   {
     path: '/backstage',
     name: 'backstage',
-    component: () => import('../views/BackstageView.vue')
+    component: () => import('../views/BackstageView.vue'),
+    children:[
+      {
+        path: 'userManagement',
+        name: 'userManagement',
+        component: () => import('../views/Backstage/UserManagement.vue')
+      },
+      {
+        path: 'volManagement',
+        name: 'volManagement',
+        component: () => import('../views/Backstage/VolManagement.vue')
+      },
+      {
+        path: 'releasedNews',
+        name: 'releasedNews',
+        component: () => import('../views/Backstage/ReleasedNews.vue')
+      },
+      {
+        path: 'volReview',
+        name: 'volReview',
+        component: () => import('../views/Backstage/VolReview.vue')
+      },
+      {
+        path: 'reports',
+        name: 'reports',
+        component: () => import('../views/Backstage/Reports.vue')
+      },
+    ]
   },
   {
     path: '/mainmenu',
