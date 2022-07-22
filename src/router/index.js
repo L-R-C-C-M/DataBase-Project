@@ -14,6 +14,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
+  //管理员后台//
   {
     path: '/backstage',
     name: 'backstage',
@@ -44,13 +45,54 @@ const routes = [
         name: 'reports',
         component: () => import('../views/Backstage/Reports.vue')
       },
+      {
+        path:"InformationRelease",
+        component:() => import('../views/Backstage/InformationRelease.vue')
+      },
+      {
+        path:"PersonalInfo",
+        component:() => import('../views/Backstage/PersonalInfo.vue')
+      },
     ]
   },
   {
     path: '/mainmenu',
     name: 'mainmenu',
     component: () => import('../views/MainmenuView.vue')
-  }
+  },
+  //普通用户后台//
+  {
+    path: '/UserBackstage',
+    name: 'UserBackstage',
+    component: () => import('../views/UserBackStageView.vue'),
+    children:[
+      {
+        path:"PersonalInfo",
+        component:() => import('../views/Backstage/PersonalInfo.vue')
+      },
+      {
+        path:"UserHomePage",
+        component:() => import('../views/Backstage/UserHomePage.vue')
+      }
+    ]
+  },
+  //志愿者后台//
+  {
+    path: '/VolBackstage',
+    name: 'VolBackstage',
+    component: () => import('../views/VolBackStageView.vue'),
+    children:[
+      {
+        path:"PersonalInfo",
+        component:() => import('../views/Backstage/PersonalInfo.vue')
+      },
+      {
+        path:"VolHomePage",
+        component:() => import('../views/Backstage/VolHomePage.vue')
+      }
+    ]
+  },
+  
 ]
 
 const router = createRouter({

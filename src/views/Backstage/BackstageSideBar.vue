@@ -27,7 +27,7 @@
         </template>
         <el-menu-item-group>
             <el-menu-item index="/backstage/releasedNews">已发布资讯</el-menu-item>
-            <el-menu-item >发布资讯</el-menu-item>
+            <el-menu-item index="/backstage/InformationRelease">发布资讯</el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
 
@@ -41,9 +41,9 @@
         <span>举报处理</span>
       </el-menu-item>
 
-      <el-menu-item index="5">
+      <el-menu-item index="/backstage/PersonalInfo">
         <el-icon><setting /></el-icon>
-        <span>设置</span>
+        <span>个人信息</span>
       </el-menu-item>
     </el-menu>
   </el-aside>
