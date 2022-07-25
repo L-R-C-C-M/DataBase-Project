@@ -1,15 +1,15 @@
 <!-- @author:刘筱科-志愿者后台管理界面的侧边导航栏 -->
 <template>
 <!-- 侧边栏 -->
-  <el-aside width="200px" style="background-color: #333744">
+  <el-aside width="200px" style="background-color: #323A52">
     <el-menu
-      background-color="#545c64"
+      background-color="#323A52"
         text-color="#fff"
-        active-text-color="#ffd04b"
+        active-text-color="#2C9EF7"
         router>
 
       <el-menu-item index="/VolBackstage/VolHomePage">
-        <el-icon><setting /></el-icon>
+        <el-icon><User /></el-icon>
         <span>主页</span>
       </el-menu-item>
 
