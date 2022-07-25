@@ -1,5 +1,4 @@
 <!-- @author:杨嘉仪-后台管理界面的模板 -->
-<!-- 差图标和颜色 -->
 <template>
 <!-- 侧边栏 -->
   <el-aside width="200px" style="background-color: #333744">
