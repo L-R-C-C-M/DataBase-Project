@@ -1,5 +1,4 @@
-<!-- @author:杨嘉仪-后台管理界面的模板 -->
-<!-- 差图标 -->
+<!-- @author:刘筱科-普通用户后台管理界面 -->
 <template>
   <el-container class="home-container" style="height:100%">
         <!-- 头部区 -->
@@ -23,7 +22,7 @@
         <!-- 页面主体区域 -->
         <el-container style="height:100%">
           <!-- 侧边栏 -->
-          <BackstageSideBar/>
+          <UserBackstageSideBar/>
           <!-- 右侧内容主体 -->
           <el-container style="height:100%" direction="vertical">
             <router-view/>
@@ -33,11 +32,11 @@
 </template>
  
 <script>
-  import BackstageSideBar from '@/views/Backstage/BackstageSideBar'
+  import UserBackstageSideBar from '@/views/Backstage/UserBackstageSideBar'
   export default {
-  name: 'BackstageView',
+  name: 'UserBackstageView',
   components: {
-    BackstageSideBar
+    UserBackstageSideBar
   },
   methods:{
     logout(){

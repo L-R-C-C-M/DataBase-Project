@@ -3,7 +3,10 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/backstage">Backstage</router-link>|
-    <router-link to="/mainmenu">Mainmenu</router-link>
+    <router-link to="/mainmenu">Mainmenu</router-link>|
+    <router-link to="/Userbackstage">UserBackstage</router-link>|
+    <router-link to="/Volbackstage">Volbackstage</router-link>
+
   </nav>
   <router-view/>
 </template>
@@ -15,8 +18,9 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height:100%
 }
-
+html,body{ height:100%; } 
 nav {
   padding: 30px;
 }
