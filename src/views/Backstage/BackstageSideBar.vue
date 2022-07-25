@@ -11,7 +11,7 @@
 
       <el-sub-menu index="1">
         <template #title>
-          <el-icon><location /></el-icon>
+          <el-icon><User /></el-icon>
           <span>用户管理</span>
         </template>
         <el-menu-item-group>
@@ -22,7 +22,7 @@
 
       <el-sub-menu index="2">
         <template #title>
-            <el-icon><icon-menu /></el-icon>
+            <el-icon><DocumentCopy /></el-icon>
             <span>资讯管理</span>
         </template>
         <el-menu-item-group>
@@ -32,12 +32,12 @@
       </el-sub-menu>
 
       <el-menu-item index="/backstage/volReview">
-        <el-icon><document /></el-icon>
+        <el-icon><Coordinate /></el-icon>
             <span>志愿者审核</span>
       </el-menu-item>
 
       <el-menu-item index="/backstage/reports">
-        <el-icon><setting /></el-icon>
+        <el-icon><MessageBox /></el-icon>
         <span>举报处理</span>
       </el-menu-item>
 
