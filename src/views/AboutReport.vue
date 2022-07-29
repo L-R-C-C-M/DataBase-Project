@@ -1,0 +1,88 @@
+<!-- @author:杨芾卉-寻人信息详情页面 -->
+<template>
+  <span>详情界面的模板</span>
+  <el-container class="detail-view" style="height:500px;">
+      <el-header style="height:55px;">
+          <el-menu
+            :default-active="activeIndex"
+            class="up-menu"
+            mode="horizontal"
+            background-color="#202741"
+            text-color="#FFFFFF"
+            active-text-color="#2E74B6"
+            :ellipsis="false"
+            @select="handleSelect"
+          >
+            <el-image
+              style="height:70%;width:20%;"
+              :src="require('../../image/logo.png')"
+              fit="contain"
+            />
+            <div class="flex-grow" />
+            <el-menu-item index="0">寻人首页</el-menu-item>
+            <el-menu-item index="1">志愿活动</el-menu-item>
+            <el-menu-item index="2">寻人资讯</el-menu-item>
+            <el-menu-item index="3">相关部门信息</el-menu-item>
+            <el-menu-item index="4">登录</el-menu-item>
+          </el-menu>
+      </el-header>
+
+      <el-main>
+        <!-- 这里是页面内容 -->
+        <ReportInfoView></ReportInfoView>
+      </el-main>
+      <el-footer>
+            <el-image
+              style="height:70%;width:20%;"
+              :src="require('../../image/logo.png')"
+              fit="contain"
+            />
+            <span style="display:block;text-align:right;">客服 : +7 700 000 000 <br /> yixun@163.edu</span>
+      </el-footer>
+  </el-container>
+</template>
+
+<script>
+import ReportInfoView from "./ReportInfoView.vue";
+
+export default {
+  components: { ReportInfoView },
+};
+</script>
+
+
+<!-- css -->
+<style scoped>
+.detail-view .el-header {
+  background-color: #202741;
+  color: #FFFFFF;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.main-view .el-header {
+  color: #FFFFFF;
+  background-image:url("../../image/relevent-department.png") ;
+  background-size: cover;
+}
+.up-menu{
+  height:55px;
+  width:100%;
+  align-items: center;
+}
+.el-main{
+    background-color: #F4F6F9;
+ }
+.el-footer {
+  background-color: #202741;
+  color:#dddcdc;
+  height:40px;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-grow {
+  flex-grow: 1;
+}
+</style>
