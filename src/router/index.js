@@ -43,28 +43,6 @@ const routes = [
         component: () => import('../views/DepartmentDetailView.vue'),
       }
       
-      // {
-      //   path: "1-1",
-      //   component: () => import('../views/DepartmentInfoView.vue'),
-      //   children:[{
-      //     path:"detail",
-      //     component: () => import('../views/DepartmentDetailView.vue'),
-      //   }
-      //   ]
-
-      // },
-      // {
-      //   path: "1-2",
-      //   component: () => import('../views/DepartmentInfoView.vue')
-      // },
-      // {
-      //   path: "1-3",
-      //   component: () => import('../views/DepartmentInfoView.vue')
-      // },
-      // {
-      //   path: "1-4",
-      //   component: () => import('../views/DepartmentInfoView.vue')
-      // }
     ]
   },
 ]
