@@ -22,22 +22,22 @@
         </div>
         <el-row :gutter="20" style="margin-top: 30px;margin-bottom: 30px;">
             <el-col :span="10"><el-form-item label="ID">
-                <el-input v-model="form.ID" autocomplete="off" disabled></el-input>
+                <el-input v-model="form.user_id" autocomplete="off" disabled></el-input>
             </el-form-item></el-col>
             <el-col :span="10"><el-form-item label="昵称">
-                <el-input  v-if="!isChange[0]"  @change="changeBorderColor(0)" v-model="form.username" autocomplete="off"></el-input>
+                <el-input  v-if="!isChange[0]"  @change="changeBorderColor(0)" v-model="form.user_name" autocomplete="off"></el-input>
                 <el-input  v-else class="input-highlight" v-model="form.username" autocomplete="off"></el-input>
             </el-form-item></el-col>
             <el-col :span="10"> <el-form-item label="电话">
-                <el-input v-if="!isChange[1]"  @change="changeBorderColor(1)" v-model="form.phone" autocomplete="off"></el-input>
+                <el-input v-if="!isChange[1]"  @change="changeBorderColor(1)" v-model="form.user_phonenum" autocomplete="off"></el-input>
                 <el-input  v-else class="input-highlight" v-model="form.phone" autocomplete="off"></el-input>
              </el-form-item></el-col>
              <el-col :span="10"> <el-form-item label="邮箱">
-                <el-input v-if="!isChange[2]"  @change="changeBorderColor(2)" v-model="form.email" autocomplete="off"></el-input>
+                <el-input v-if="!isChange[2]"  @change="changeBorderColor(2)" v-model="form.user_mailbox" autocomplete="off"></el-input>
                 <el-input  v-else class="input-highlight" v-model="form.email" autocomplete="off"></el-input>
              </el-form-item></el-col>
              <el-col :span="10"> <el-form-item label="地址">
-                <el-input v-if="!isChange[3]"  @change="changeBorderColor(3)" v-model="form.address" autocomplete="off"></el-input>
+                <el-input v-if="!isChange[3]"  @change="changeBorderColor(3)" v-model="form.user_address" autocomplete="off"></el-input>
                 <el-input  v-else class="input-highlight" v-model="form.address" autocomplete="off"></el-input>
              </el-form-item></el-col>
         </el-row>
@@ -52,19 +52,14 @@
 </template>
 
 <script>
+import api from "/src/api/index"
+
 export default{
     name: 'information-vue',
     data(){
       return{
-        form:{
-          ID:1232323,
-          username:"uyuyui",
-          email:"273763726372@sds.com",
-          phone:"123232",
-          address:"eyuwyeuwye",
-          fundation_time:"8779879",
-          avatarUrl:null,
-          },
+        user_id:'11',
+        form: {},
         isChange:[false,false,false,false]
       }
     },
@@ -81,8 +76,18 @@ export default{
         this.isChange[index]=true;
       },
       resetData(){ // 更新时调用
-        Object.assign(this.$data, this.$options.data.call(this));
+         Object.assign(this.$data, this.$options.data.call(this));
+         api.getUserInfo(this.user_id).then(res =>{
+            console.log(res.data);
+            this.form=res.data.data;
+        })
       }
+    },
+    mounted(){
+      api.getUserInfo(this.user_id).then(res =>{
+            console.log(res.data);
+            this.form=res.data.data;
+        })
     }
     
 }
