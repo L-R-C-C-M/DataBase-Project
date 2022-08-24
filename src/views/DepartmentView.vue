@@ -1,10 +1,10 @@
 <!-- @author:杨芾卉-相关部门信息主页面（侧边导航） -->
 <!-- 有bug 路由没有设置好 -->
 <template>
-  <el-container class="main-view" style="height: 700px">
+  <el-container class="main-view" style="height: 100%">
     <el-header style="height: 200px">
       <el-menu
-        :default-active="activeIndex"
+        
         class="up-menu"
         mode="horizontal"
         background-color="rgba(0, 0, 0, 0)"
@@ -19,7 +19,7 @@
           fit="contain"
         />
 
-        <div style="margin-left: 280px; margin-top: 170px; font-size: larger">
+        <div style="margin-left: 40%; margin-top: 15%; font-size: larger; width: 100%;">
             <span>相关部门信息</span>
           </div>
 
@@ -37,10 +37,10 @@
       <!-- 左侧菜单导航栏 -->
         <el-container style="height: 100%">
           <el-menu
-            default-active="$route.path"
+            :default-active="$route.path"
             class="el-menu-vertical-demo"
             collapse="true"
-            router="true"
+            :router="true"
             unique-opened="true"
             @open="handleOpen"
             @close="handleClose"
@@ -50,41 +50,42 @@
               <template #title>
                 <el-icon>上海市</el-icon>
               </template>
-              <el-menu-item index="department/1/1-1">黄浦区</el-menu-item>
-              <el-menu-item index="department/1/1-2">徐汇区</el-menu-item>
-              <el-menu-item index="department/1/1-3">杨浦区</el-menu-item>
-              <el-menu-item index="department/1/1-4">嘉定区</el-menu-item>
+              <el-menu-item index="/department/1-1">黄浦区</el-menu-item>
+              <el-menu-item index="/department/1-2">徐汇区</el-menu-item>
+              <el-menu-item index="/department/1-3">杨浦区</el-menu-item>
+              <el-menu-item index="/department/1-4">嘉定区</el-menu-item>
             </el-sub-menu>
 
             <el-sub-menu index="2">
               <template #title>
                 <el-icon><span>江苏省</span></el-icon>
               </template>
-              <el-menu-item index="2-1">南京市</el-menu-item>
-              <el-menu-item index="2-2">苏州市</el-menu-item>
-              <el-menu-item index="2-3">无锡市</el-menu-item>
-              <el-menu-item index="2-4">扬州市</el-menu-item>
+              <el-menu-item index="/department/2-1">南京市</el-menu-item>
+              <el-menu-item index="/department/2-2">苏州市</el-menu-item>
+              <el-menu-item index="/department/2-3">无锡市</el-menu-item>
+              <el-menu-item index="/department/2-4">扬州市</el-menu-item>
             </el-sub-menu>
 
             <el-sub-menu index="3">
               <template #title>
                 <el-icon>黑龙江省</el-icon>
               </template>
-              <el-menu-item index="3-1">哈尔滨市</el-menu-item>
-              <el-menu-item index="3-2">大庆市</el-menu-item>
-              <el-menu-item index="3-3">漠河市</el-menu-item>
-              <el-menu-item index="3-4">鸡西市</el-menu-item>
+              <el-menu-item index="/department/3-1">哈尔滨市</el-menu-item>
+              <el-menu-item index="/department/3-2">大庆市</el-menu-item>
+              <el-menu-item index="/department/3-3">漠河市</el-menu-item>
+              <el-menu-item index="/department/3-4">鸡西市</el-menu-item>
             </el-sub-menu>
 
             <el-sub-menu index="4">
               <template #title>
                 <el-icon>广东省</el-icon>
               </template>
-              <el-menu-item index="4-1">广州市</el-menu-item>
-              <el-menu-item index="4-2">深圳市</el-menu-item>
-              <el-menu-item index="4-3">珠海市</el-menu-item>
-              <el-menu-item index="4-4">汕头市</el-menu-item>
+              <el-menu-item index="/department/4-1">广州市</el-menu-item>
+              <el-menu-item index="/department/4-2">深圳市</el-menu-item>
+              <el-menu-item index="/department/4-3">珠海市</el-menu-item>
+              <el-menu-item index="/department/4-4">汕头市</el-menu-item>
             </el-sub-menu>
+            <!-- <router-view></router-view> -->
           </el-menu>
         </el-container>
         <!-- 右侧主体页面 -->
@@ -169,4 +170,5 @@ const handleClose = (key, keyPath) => {
 .flex-grow {
   flex-grow: 1;
 }
+
 </style>

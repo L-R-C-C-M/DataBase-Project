@@ -1,7 +1,7 @@
 <!-- @author:杨芾卉-寻人资讯主页面 -->
 <template>
   <div class="common-layout">
-    <el-container class="main-view" style="height: 1000px">
+    <el-container class="main-view" style="height: 100%">
       <!-- 这是页头 -->
       <el-header style="height: 200px">
         <el-menu
@@ -20,7 +20,7 @@
             fit="contain"
           />
 
-          <div style="margin-left: 280px; margin-top: 170px; font-size: larger">
+          <div style="margin-left: 40%; margin-top: 15%; font-size: larger; width:100%">
             <span>寻人资讯</span>
           </div>
 

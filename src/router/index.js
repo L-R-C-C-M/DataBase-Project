@@ -23,24 +23,48 @@ const routes = [
   {
     path: "/department",
     name: "department",
+    //重定向，默认显示第一个页面
+    redirect:"/department/1-1",
     component: () => import("../views/DepartmentView.vue"),
-    children:[
+    children: [
       {
-        path:"1/1-1",
-        component:() => import('../views/DepartmentInfoView.vue')
+        //定义路由参数
+        path: ":dpt_id",
+        component: () => import('../views/DepartmentInfoView.vue')
+      },
+      //接收参数作为路径
+      {
+        path: "{{ $route.params.dpt_id }}",
+        component: () => import('../views/DepartmentInfoView.vue'),
+
       },
       {
-        path:"1/1-2",
-        component:() => import('../views/DepartmentInfoView.vue')
-      },
-      {
-        path:"1/1-3",
-        component:() => import('../views/DepartmentInfoView.vue')
-      },
-      {
-        path:"1/1-4",
-        component:() => import('../views/DepartmentInfoView.vue')
-      },
+        path:"detail",
+        component: () => import('../views/DepartmentDetailView.vue'),
+      }
+      
+      // {
+      //   path: "1-1",
+      //   component: () => import('../views/DepartmentInfoView.vue'),
+      //   children:[{
+      //     path:"detail",
+      //     component: () => import('../views/DepartmentDetailView.vue'),
+      //   }
+      //   ]
+
+      // },
+      // {
+      //   path: "1-2",
+      //   component: () => import('../views/DepartmentInfoView.vue')
+      // },
+      // {
+      //   path: "1-3",
+      //   component: () => import('../views/DepartmentInfoView.vue')
+      // },
+      // {
+      //   path: "1-4",
+      //   component: () => import('../views/DepartmentInfoView.vue')
+      // }
     ]
   },
 ]
