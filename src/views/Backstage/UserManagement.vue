@@ -26,12 +26,16 @@
       <el-table :data="tableData" style="width: 100%" header-align="center">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column prop="user_id" label="用户ID" align="center"/>
-      <el-table-column prop="user_name" label="用户昵称" align="center"/>
-      <el-table-column prop= "phone_num" label="手机号" align="center"/>
-      <el-table-column prop= "report_num" label="举报数量" align="center"/>
-      <el-table-column prop= "searchinfo_num" label="发布寻人信息数量" align="center"/>
+      <el-table-column prop="user_name" label="昵称" align="center"/>
+      <el-table-column prop="gender" label="性别" align="center"/>
+      <el-table-column prop= "phone_num" label="电话" align="center"/>
+      <el-table-column prop= "mail_num" label="邮箱" align="center"/>
+      <el-table-column prop= "info_report_num" label="举报寻人信息数量" align="center"/>
+      <el-table-column prop= "clue_report_num" label="举报线索数量" align="center"/>
+      <el-table-column prop= "search_info_num" label="发布寻人信息数量" align="center"/>
+      <el-table-column prop= "clue_num" label="发布线索数量" align="center"/>
       <el-table-column prop= "fundation_time" label="创建时间" align="center"/>
-      <el-table-column prop= "validate" label="账户禁用" align="center">
+      <el-table-column prop= "isactive" label="账户禁用" align="center">
         <template #default>
         <el-switch v-model="value1" />
         </template>
@@ -43,6 +47,17 @@
         </template>
       </el-table-column>
       </el-table>
+
+      <!--分页-->
+      <el-pagination
+      v-model:currentPage="pagenum"
+      v-model:page-size="pagesize"
+      :page-sizes="[1, 2, 5, 10]"
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </el-card>
   
   </el-main>
@@ -50,19 +65,38 @@
  
 <script>
 import { ref } from 'vue'
+import api from "/src/api/index"
 const value1 = ref(true)
 export default {
     data() {
         return {
-            tableData: [{
-        user_id: '20202020',
-        user_name: 'Tom',
-        phone_num: '28098908123',
-        report_num: '3018239',
-        searchinfo_num: '4',
-        fundation_time: '2020-12-2',
-            }]
+          tableData: [],
+          pagenum: 1,  //页数
+          pagesize: 5, //每页的数量
+          total:100,  //总条目数
         }
+    },
+    mounted(){
+      this.getAllNorUser();
+    },
+    methods:{
+      getAllNorUser(){
+        api.getAllNorUser(this.pagenum,this.pagesize).then(res =>{
+            console.log(res.data);
+            this.tableData=res.data.data.user_info;
+            //this.total=res.data.data.total;
+        })
+      },
+      handleSizeChange(newSize){
+        console.log(newSize);
+        this.pagesize = newSize;//重新指定每页数据量
+        this.getAllNorUser();//带着新的分页请求获取数据
+      },
+      handleCurrentChange(newPage){
+        console.log(newPage);
+        this.pagenum = newPage;//重新指定当前页
+        this.getAllNorUser();
+      }
     }
 };
 </script>
@@ -90,6 +124,12 @@ export default {
 .el-card{
 		margin-bottom:20px; //下边距
 	}
+.demo-pagination-block + .demo-pagination-block {
+  margin-top: 10px;
+}
+.demo-pagination-block .demonstration {
+  margin-bottom: 16px;
+}
 
 </style>
  
