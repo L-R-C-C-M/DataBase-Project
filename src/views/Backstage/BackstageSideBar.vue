@@ -30,6 +30,11 @@
         </el-menu-item-group>
       </el-sub-menu>
 
+      <el-menu-item index="/backstage/releaseActivity">
+        <el-icon><Coordinate /></el-icon>
+            <span>发布志愿活动</span>
+      </el-menu-item>
+
       <el-menu-item index="/backstage/volReview">
         <el-icon><Coordinate /></el-icon>
             <span>志愿者审核</span>

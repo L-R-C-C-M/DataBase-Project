@@ -8,22 +8,29 @@
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
     <el-card style="height:100%;width:100%;">
-    <div style="margin-left: 3%; margin-top: 3%">
+    <div style="margin-left: 3%; margin-top: 3%; margin-right: 5%;">
         <el-form-item label="文章标题" style="margin-bottom: 3%">
-            <el-input v-model="article.title" 
+            <el-input v-model="this.article.title" 
              :autosize="{ minRows: 1}"
              type="textarea"
              placeholder="请输入文章标题"></el-input>
         </el-form-item>
+         <el-form-item label="文章类型" style="margin-bottom: 3%">
+            <el-radio-group v-model="this.article.type">
+              <el-radio-button label="寻人新闻"></el-radio-button>
+              <el-radio-button label="寻人政策"></el-radio-button>
+            </el-radio-group>        
+         </el-form-item>
         <el-form-item label="文章封面">
             <div style="text-align: left;">
             <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action
+            :auto-upload="false"
+		        ref="upload"
             :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="article.coverUrl" :src="article.coverUrl" class="avatar">
+            :on-change="onUploadChange">
+            <img v-if="this.article.imageurl" :src="this.article.imageurl" class="avatar">
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
             </el-upload>  
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5M</div>
@@ -45,45 +52,57 @@
 </template>
 
 <script>
-import {ref} from "vue"
+import api from "/src/api/index"
+
 export default{
     name: 'InformationRelease-vue',
     data(){
       return{
+        admin_id:1,
         article:{
-          title:"",
-          coverUrl:null,
-          content:""
-          }
+          title:'',
+          type:'',
+          content:'',
+          imageurl:'',
+          id:''
+        },
       }
-    },
-    //
-    setup(){
-        
-
     },
     methods:{
       save() {
-
+        console.log(this.article)
+        api.releaseNews(this.admin_id,this.article.content,this.article.title,this.article.type)
+          .then(res =>{
+              this.article.id=res.data.data.news_id;
+              console.log(res.data.data.news_id);
+               api.addNewsCover(this.article.id,this.article.imageurl)
+                  .then(res =>{
+                    Object.assign(this.$data, this.$options.data.call(this));
+;})      
+               })
       },
-      handleAvatarSuccess(res){
-        //res就是文件的路径
-       this.form.avatarUrl = res
-      },
-      beforeAvatarUpload(file) {
-        const isJPGPNG=false;
-        if (file.type === 'image/jpeg' ||file.type ==='image/png')
-            isJPGPNG=true;
-        const isLt5M = file.size / 1024 / 1024 < 5;
 
-        if (!isJPGPNG) {
-          this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+       //选择上传图片
+       onUploadChange(file)
+      {
+        const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png'|| file.raw.type === 'image/gif');
+        const isLt1M = file.size / 1024 / 1024 < 1;
+
+        if (!isIMAGE) {
+          this.$message.error('上传文件只能是图片格式!');
+          return false;
         }
-        if (!isLt5M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+        if (!isLt1M) {
+          this.$message.error('上传文件大小不能超过 1MB!');
+          return false;
         }
-        return isJPGPNG && isLt5M;
-      }
+        var reader = new FileReader();
+        reader.readAsDataURL(file.raw);
+        reader.onload = (e) => {
+            this.article.imageurl = e.target.result;
+            console.log(this.article.imageurl)//图片的base64数据
+        }
+      },
     }
     
 }

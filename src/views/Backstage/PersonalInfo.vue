@@ -8,43 +8,85 @@
   <el-main style="background-color: rgba(245, 249, 250, 1)">
   <div style="text-align: center">
     <el-card style="width:100%;">
-      <el-form label-width="80px" size="small">
+      <el-form label-width="80px">
         <div style="text-align: center; margin: 10px 0">
-          <el-upload
+          <el-upload v-if="!isEdit"
               class="avatar-uploader"
-              action="http://localhost:9090/file/upload"
+              action
+              :auto-upload="false"
+		          ref="upload"
+              disabled
               :show-file-list="false"
-              :on-success="handleAvatarSuccess"
+              :on-change="onUploadChange"
           >
-            <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
+            <img v-if="this.form.user_head" :src="this.form.user_head" class="avatar">
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+          </el-upload>
+          <el-upload v-if="isEdit"
+              class="avatar-uploader"
+              action
+              :auto-upload="false"
+		          ref="upload"
+              :show-file-list="false"
+              :on-change="onUploadChange"
+          >
+            <img v-if="this.form.user_head" :src="this.form.user_head" class="avatar">
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
         </div>
         <el-row :gutter="20" style="margin-top: 30px;margin-bottom: 30px;">
             <el-col :span="10"><el-form-item label="ID">
-                <el-input v-model="form.user_id" autocomplete="off" disabled></el-input>
+                <el-input  v-model="form.user_id" autocomplete="off" disabled></el-input>
             </el-form-item></el-col>
             <el-col :span="10"><el-form-item label="昵称">
-                <el-input  v-if="!isChange[0]"  @change="changeBorderColor(0)" v-model="form.user_name" autocomplete="off"></el-input>
-                <el-input  v-else class="input-highlight" v-model="form.username" autocomplete="off"></el-input>
+                <el-input  v-if="!isEdit"  v-model="form.user_name" autocomplete="off" disabled></el-input>
+                <el-input  v-if="!isChange[0]&&isEdit"  @change="changeBorderColor(0)" v-model="form.user_name" autocomplete="off"></el-input>
+                <el-input  v-if="isChange[0]&&isEdit" class="input-highlight" v-model="form.user_name" autocomplete="off"></el-input>
             </el-form-item></el-col>
             <el-col :span="10"> <el-form-item label="电话">
-                <el-input v-if="!isChange[1]"  @change="changeBorderColor(1)" v-model="form.user_phonenum" autocomplete="off"></el-input>
-                <el-input  v-else class="input-highlight" v-model="form.phone" autocomplete="off"></el-input>
+                <el-input  v-if="!isEdit"  v-model="form.user_phonenum" autocomplete="off" disabled></el-input>
+                <el-input v-if="!isChange[1]&&isEdit"  @change="changeBorderColor(1)" v-model="form.user_phonenum" autocomplete="off"></el-input>
+                <el-input v-if="isChange[1]&&isEdit" class="input-highlight" v-model="form.user_phonenum" autocomplete="off"></el-input>
              </el-form-item></el-col>
              <el-col :span="10"> <el-form-item label="邮箱">
-                <el-input v-if="!isChange[2]"  @change="changeBorderColor(2)" v-model="form.user_mailbox" autocomplete="off"></el-input>
-                <el-input  v-else class="input-highlight" v-model="form.email" autocomplete="off"></el-input>
+                <el-input  v-if="!isEdit"  v-model="form.user_mailbox" autocomplete="off" disabled></el-input>
+                <el-input  v-if="!isChange[2]&&isEdit"  @change="changeBorderColor(2)" v-model="form.user_mailbox" autocomplete="off"></el-input>
+                <el-input  v-if="isChange[2]&&isEdit" class="input-highlight" v-model="form.user_mailbox" autocomplete="off"></el-input>
              </el-form-item></el-col>
              <el-col :span="10"> <el-form-item label="地址">
-                <el-input v-if="!isChange[3]"  @change="changeBorderColor(3)" v-model="form.user_address" autocomplete="off"></el-input>
-                <el-input  v-else class="input-highlight" v-model="form.address" autocomplete="off"></el-input>
+             <div style="display: flex; flex-direction:row; justify-content: space-around;">
+             <el-cascader v-if="!isEdit"
+                  size="default"
+                  :options="options"
+                  disabled
+                  v-model="selectedOptions"
+                  @change="handleChange">
+               </el-cascader>
+              <el-cascader v-if="!isChange[4]&&isEdit"
+                  size="default"
+                  :options="options"
+                  v-model="selectedOptions"
+                  @change="handleChange">
+               </el-cascader>
+               <el-cascader v-if="isChange[4]&&isEdit" class="cascader-highlight"
+                  size="default"
+                  :options="options"
+                  v-model="selectedOptions"
+                  @change="handleChange">
+               </el-cascader>
+                 <el-input style="width:auto" v-if="!isEdit"  v-model="form.user_address" autocomplete="off" disabled></el-input>
+                 <el-input style="width:auto" v-if="!isChange[3]&&isEdit"  @change="changeBorderColor(3)" v-model="form.user_address" autocomplete="off"></el-input>
+                 <el-input style="width:auto" v-if="isChange[3]&&isEdit"  class="input-highlight" v-model="form.user_address" autocomplete="off"></el-input>
+                 </div>
              </el-form-item></el-col>
         </el-row>
       </el-form>
-      <div class="buttoncom" style="text-align: center">
+      <div v-if="isEdit" class="buttoncom" style="text-align: center">
         <el-button type="primary" @click="save">确 定</el-button>
         <el-button type="info" @click="resetData">重 置</el-button>
+      </div>
+      <div v-else class="buttoncom" style="text-align: center">
+        <el-button type="primary" @click="edit">修 改</el-button>
       </div>
     </el-card>
   </div>
@@ -53,40 +95,99 @@
 
 <script>
 import api from "/src/api/index"
+import { regionData } from 'element-china-area-data'
 
 export default{
     name: 'information-vue',
     data(){
       return{
-        user_id:'11',
+        options: regionData,
+        selectedOptions:[],
+        user_id:'1',
         form: {},
-        isChange:[false,false,false,false]
+        isChange:[false,false,false,false,false],
+        isEdit:false
+        //avatarUrl:null
       }
     },
     methods:{
+      //修改状态
+      edit(){
+        this.isEdit=true
+      },
+      //保存
       save() {
+        console.log(this.form.user_head)
+        api.uploadAvator(this.form.user_id,this.form.user_head)
+        .then(res =>{
+              console.log(res.data); })
+        api.changeUserInfo(this.form.user_id,this.form.user_name,this.form.user_phonenum,this.form.user_mailbox,this.form.user_province,this.form.user_city,this.form.user_area,this.form.user_address)
+                .then(res =>{
+              console.log(res.data); })
+        this.isChange=[false,false,false,false,false]
+        this.isEdit=false
+      },
 
+      //三级省市区修改
+      handleChange(value){
+        this.form.user_province=value[0];
+        this.form.user_city=value[1];
+        this.form.user_area=value[2];
+        this.isChange[4]=true;
       },
       handleAvatarSuccess(res){
         //res就是文件的路径
-       this.form.avatarUrl = res
+       console.log(res)
       },
+
+
+      //选择上传图片
+       onUploadChange(file)
+      {
+        const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png'|| file.raw.type === 'image/gif');
+        const isLt1M = file.size / 1024 / 1024 < 1;
+
+        if (!isIMAGE) {
+          this.$message.error('上传文件只能是图片格式!');
+          return false;
+        }
+        if (!isLt1M) {
+          this.$message.error('上传文件大小不能超过 1MB!');
+          return false;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file.raw);
+        reader.onload = (e) => {
+            this.form.user_head = e.target.result;
+            console.log(this.form.user_head)//图片的base64数据
+        }
+      },
+
       changeBorderColor(index){
-        console.log("概念");
         this.isChange[index]=true;
       },
-      resetData(){ // 更新时调用
-         Object.assign(this.$data, this.$options.data.call(this));
+
+      // 重置
+      resetData(){ 
+        Object.assign(this.$data, this.$options.data.call(this));
          api.getUserInfo(this.user_id).then(res =>{
             console.log(res.data);
             this.form=res.data.data;
+            this.selectedOptions=[this.form.user_province,this.form.user_city,this.form.user_area];
+            this.isEdit=true
         })
       }
     },
-    mounted(){
+
+    //初始化
+    created(){
       api.getUserInfo(this.user_id).then(res =>{
             console.log(res.data);
             this.form=res.data.data;
+            this.selectedOptions=[this.form.user_province,this.form.user_city,this.form.user_area];
+        })
+        .catch(err =>{
+          allert("个人信息查询失败！");
         })
     }
     
@@ -148,6 +249,12 @@ export default{
 
 .input-highlight{
   --el-input-border-color: #409eff;
+  --el-input-focus-border-color: var(--el-input-border-color);
+  --el-input-hover-border-color:var(--el-input-border-color);
+}
+
+.cascader-highlight{
+  --el-border-color: #409eff;
   --el-input-focus-border-color: var(--el-input-border-color);
   --el-input-hover-border-color:var(--el-input-border-color);
 }

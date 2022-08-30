@@ -33,19 +33,19 @@ const instance = axios.create({
 
 //拦截器最常用的
 
-//发送数据之前
-instance.interceptors.request.use(
-    config =>{
-        if(config.method == "post"){
-            config.data = querystring.stringify(config.data)
-        }
-        //config:包含着网络请求的所有信息
-        return config;
-    },
-    error =>{
-        return Promise.reject(error)
-    }
-)
+// //发送数据之前
+// instance.interceptors.request.use(
+//     config =>{
+//         if(config.method == "post"){
+//             config.data = querystring.stringify(config.data)
+//         }
+//         //config:包含着网络请求的所有信息
+//         return config;
+//     },
+//     error =>{
+//         return Promise.reject(error)
+//     }
+// )
 
 //获取数据之前
 instance.interceptors.response.use(

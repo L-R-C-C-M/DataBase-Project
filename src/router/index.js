@@ -36,6 +36,11 @@ const routes = [
         component: () => import('../views/Backstage/ReleasedNews.vue')
       },
       {
+        path: 'releaseActivity',
+        name: 'releaseActivity',
+        component: () => import('../views/Backstage/ReleaseActivity.vue')
+      },
+      {
         path: 'volReview',
         name: 'volReview',
         component: () => import('../views/Backstage/VolReview.vue')
@@ -88,7 +93,13 @@ const routes = [
       },
       {
         path:"VolHomePage",
-        component:() => import('../views/Backstage/VolHomePage.vue')
+        component:() => import('../views/Backstage/VolHomePage.vue'),
+        children:[
+          {
+            path:"volunActInfo",
+            component:() => import('../views/VolunActInfoView.vue')
+          }
+        ]
       }
     ]
   },
