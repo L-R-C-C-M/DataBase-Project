@@ -27,23 +27,27 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column prop="user_id" label="用户ID" align="center"/>
       <el-table-column prop="user_name" label="昵称" align="center"/>
-      <el-table-column prop="gender" label="性别" align="center"/>
       <el-table-column prop= "phone_num" label="电话" align="center"/>
-      <el-table-column prop= "mail_num" label="邮箱" align="center"/>
       <el-table-column prop= "info_report_num" label="举报寻人信息数量" align="center"/>
       <el-table-column prop= "clue_report_num" label="举报线索数量" align="center"/>
       <el-table-column prop= "search_info_num" label="发布寻人信息数量" align="center"/>
       <el-table-column prop= "clue_num" label="发布线索数量" align="center"/>
       <el-table-column prop= "fundation_time" label="创建时间" align="center"/>
-      <el-table-column prop= "isactive" label="账户禁用" align="center">
-        <template #default>
-        <el-switch v-model="value1" />
+      <el-table-column prop= "user_state" label="账户禁用" align="center">
+        <template v-slot="scope">
+          <el-switch v-model="scope.row.user_state"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          active-value="Y"
+          inactive-value="N"
+          @change="userStateChange(scope.row)">
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column prop="operation" label="操作" align="center">
-        <template #default="scope">
-        <el-button size="small">Edit</el-button>
-        <el-button size="small">Delete</el-button>
+        <template v-slot="scope">
+          <el-button type="danger" icon="DeleteFilled" size="small"
+          @click="deleteUser(scope.row)">删除</el-button>
         </template>
       </el-table-column>
       </el-table>
@@ -57,7 +61,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-    />
+      />
   </el-card>
   
   </el-main>
@@ -73,7 +77,7 @@ export default {
           tableData: [],
           pagenum: 1,  //页数
           pagesize: 5, //每页的数量
-          total:100,  //总条目数
+          total:0,  //总条目数
         }
     },
     mounted(){
@@ -82,18 +86,51 @@ export default {
     methods:{
       getAllNorUser(){
         api.getAllNorUser(this.pagenum,this.pagesize).then(res =>{
-            console.log(res.data);
+            //console.log(res.data);
             this.tableData=res.data.data.user_info;
-            //this.total=res.data.data.total;
+            this.total=res.data.data.total;
         })
       },
+      async userStateChange(userinfo){
+        //console.log(userinfo.user_id);
+        if(userinfo.isactive=='N')
+        {
+          alert("用户已被删除！");
+          userinfo.user_state=(userinfo.user_state=='Y'?'N':'Y');
+          return;
+        }
+        await api.banUser(userinfo.user_id).then(res =>{
+          this.$message.success('更新用户状态成功！');
+        }).catch(err=>{
+          console.log(err)
+          userinfo.user_state=(userinfo.user_state=='Y'?'N':'Y');//操作失败状态恢复
+          this.$message.error('更新用户状态失败！');
+        })
+      },
+      async deleteUser(userinfo){
+        //console.log(userinfo.user_id);
+        if(userinfo.isactive=='N')
+        {
+          alert("用户已被删除！");
+          return;
+        }
+        if(confirm("您确定要删除该用户吗？")){
+        await api.deleteUser(userinfo.user_id).then(res =>{
+          this.$message.success('删除用户成功！');
+          this.getAllNorUser();
+        }).catch(err=>{
+          console.log(err)
+          this.$message.error('删除用户失败！');
+        })
+        }
+      },
       handleSizeChange(newSize){
-        console.log(newSize);
+        //console.log(newSize);
         this.pagesize = newSize;//重新指定每页数据量
         this.getAllNorUser();//带着新的分页请求获取数据
       },
       handleCurrentChange(newPage){
-        console.log(newPage);
+        //console.log(newPage);
         this.pagenum = newPage;//重新指定当前页
         this.getAllNorUser();
       }

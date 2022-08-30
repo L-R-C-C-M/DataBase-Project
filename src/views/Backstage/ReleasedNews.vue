@@ -31,12 +31,23 @@
       <el-table-column prop= "administrator_id" label="管理员编号" align="center"/>
       <el-table-column prop= "news_type" label="资讯类型" align="center"/>
       <el-table-column prop="operation" label="操作" align="center">
-        <template #default="scope">
-        <el-button size="small">Edit</el-button>
-        <el-button size="small">Delete</el-button>
+        <template v-slot="scope">
+          <el-button type="danger" icon="DeleteFilled" size="small"
+          @click="deleteUser(scope.row)" disabled>删除</el-button>
         </template>
       </el-table-column>
       </el-table>
+
+      <!--分页-->
+      <el-pagination
+      v-model:currentPage="pagenum"
+      v-model:page-size="pagesize"
+      :page-sizes="[1, 2, 5, 10]"
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      />
   </el-card>
   
   </el-main>
@@ -49,20 +60,50 @@ const value1 = ref(true)
 export default {
     data() {
         return {
-            tableData: [{
-        news_id: '20202020',
-        news_title: 'Tom',
-        news_time: '28098908123',
-        administrator_id: '3018239',
-        news_type: '4',
-            }]
+          tableData: [],
+          pagenum: 1,  //页数
+          pagesize: 5, //每页的数量
+          total:100,  //总条目数
         }
     },
     mounted(){
-      api.getAllNews().then(res =>{
+      this.getAllNews();
+    },
+    methods:{
+      getAllNews(){
+        api.getAllNews(this.pagenum,this.pagesize).then(res =>{
             console.log(res.data);
             this.tableData=res.data.data.news_info;
+            this.total=res.data.data.total;
         })
+      },
+      async deleteUser(userinfo){
+        //console.log(userinfo.user_id);
+        /*if(userinfo.isactive=='N')
+        {
+          alert("用户已被删除！");
+          return;
+        }
+        if(confirm("您确定要删除该用户吗？")){
+        await api.deleteUser(userinfo.user_id).then(res =>{
+          this.$message.success('删除用户成功！');
+          this.getAllNorUser();
+        }).catch(err=>{
+          console.log(err)
+          this.$message.error('删除用户失败！');
+        })
+        }*/
+      },
+      handleSizeChange(newSize){
+        //console.log(newSize);
+        this.pagesize = newSize;//重新指定每页数据量
+        this.getAllNews();//带着新的分页请求获取数据
+      },
+      handleCurrentChange(newPage){
+        //console.log(newPage);
+        this.pagenum = newPage;//重新指定当前页
+        this.getAllNews();
+      }
     }
 };
 </script>
