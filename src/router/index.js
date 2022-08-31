@@ -14,6 +14,10 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
+  {
+    path:"/volunActInfo",
+    component:() => import('../views/VolunActInfoView.vue')
+  },
   //管理员后台//
   {
     path: '/backstage',
@@ -92,14 +96,12 @@ const routes = [
         component:() => import('../views/Backstage/PersonalInfo.vue')
       },
       {
+        path:"Published",
+        component:() => import('../views/Backstage/UserHomePage.vue')
+      },
+      {
         path:"VolHomePage",
         component:() => import('../views/Backstage/VolHomePage.vue'),
-        children:[
-          {
-            path:"volunActInfo",
-            component:() => import('../views/VolunActInfoView.vue')
-          }
-        ]
       }
     ]
   },

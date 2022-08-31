@@ -74,26 +74,58 @@ export default{
         api.releaseNews(this.admin_id,this.article.content,this.article.title,this.article.type)
           .then(res =>{
               this.article.id=res.data.data.news_id;
-              console.log(res.data.data.news_id);
+              console.log(res.data.status);
+              if(res.data.status==true)
+              {
+                this.open();
+              }
+              else
+              {
+                this.fail();
+              }
                api.addNewsCover(this.article.id,this.article.imageurl)
                   .then(res =>{
                     Object.assign(this.$data, this.$options.data.call(this));
-;})      
+                    ;})      
                })
       },
-
+      
+      //成功
+      open() {
+        this.$alert('资讯发布成功', '提示', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'success',
+            message: '发布成功!'
+            });
+          }
+        });
+      },
+      //失败
+      fail(){
+        this.$alert('资讯发布失败', '提示', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'error',
+            message: '发布失败'
+            });
+          }
+        });
+      },
        //选择上传图片
        onUploadChange(file)
       {
         const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png'|| file.raw.type === 'image/gif');
-        const isLt1M = file.size / 1024 / 1024 < 1;
+        const isLt1M = file.size / 1024 / 1024 < 5;
 
         if (!isIMAGE) {
           this.$message.error('上传文件只能是图片格式!');
           return false;
         }
         if (!isLt1M) {
-          this.$message.error('上传文件大小不能超过 1MB!');
+          this.$message.error('上传文件大小不能超过 5MB!');
           return false;
         }
         var reader = new FileReader();

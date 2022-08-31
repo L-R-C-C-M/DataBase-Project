@@ -13,6 +13,11 @@
         <span>主页</span>
       </el-menu-item>
 
+      <el-menu-item index="/VolBackstage/Published">
+        <el-icon><DocumentCopy /></el-icon>
+        <span>我发布的</span>
+      </el-menu-item>
+
       <el-menu-item index="/VolBackstage/PersonalInfo">
         <el-icon><setting /></el-icon>
         <span>个人信息</span>

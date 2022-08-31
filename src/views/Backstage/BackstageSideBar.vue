@@ -31,7 +31,7 @@
       </el-sub-menu>
 
       <el-menu-item index="/backstage/releaseActivity">
-        <el-icon><Coordinate /></el-icon>
+        <el-icon><Edit /></el-icon>
             <span>发布志愿活动</span>
       </el-menu-item>
 

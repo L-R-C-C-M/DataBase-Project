@@ -123,7 +123,21 @@ export default{
               console.log(res.data); })
         api.changeUserInfo(this.form.user_id,this.form.user_name,this.form.user_phonenum,this.form.user_mailbox,this.form.user_province,this.form.user_city,this.form.user_area,this.form.user_address)
                 .then(res =>{
-              console.log(res.data); })
+                  if(res.data.status==true)
+                  {
+                    this.$message({
+                        type: 'success',
+                      message: '修改成功!'
+                      })
+                  }
+                  else
+                  {
+                    this.$message({
+                        type: 'error',
+                      message: '发布失败'
+                      });
+                  }
+                   })
         this.isChange=[false,false,false,false,false]
         this.isEdit=false
       },

@@ -8,6 +8,8 @@ const base = {
     addNewsCover:"/api/Administrator/AddNewsCover",
     //1.1-2管理员发布志愿活动
     releaseVolActivity:"/api/Administrator/ReleaseVolActivity",
+    //发布志愿活动图片
+    addVolActivityPic:"/api/Administrator/AddVolActivityPic",
     //1.1-3返回所有志愿机构id和名称
     getAllVolInst:"/api/Administrator/GetAllVolInst",
     //1.3 获取用户信息
@@ -16,10 +18,16 @@ const base = {
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
     //上传头像
     uploadAvator:"/api/UserInfo/upLoadUserHead",
-    //2.1 展示用户发布的所有寻人线索
+    //2.1 展示用户发布的所有寻人信息
+    getAllSearchInfoPublished:"/api/UserOperation/GetAllSearchInfoPublished",
+    //2.2 展示用户发布的所有寻人线索
     getAllCLuesPublished:"/api/UserOperation/GetAllCLuesPublished",
+    //2.3 展示用户关注的所有寻人信息
+    getFollowInfo:"/api/UserOperation/GetFollowInfo",
+    //3.1 展示志愿者跟进的所有寻人信息
+    getFollowUpInfo:"/api/Vol/GetFollowUpInfo",
     //3.2 展示志愿者报名的所有志愿活动
-    getVolAct:'/api/Vol/GetVolAct',
+    getVolApplyAct:'/api/Vol/GetVolAct',
 
 
      //4.1.1 获取志愿活动

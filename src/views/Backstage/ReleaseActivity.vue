@@ -6,7 +6,7 @@
         </el-breadcrumb>
       </el-header>
       <el-main style="background-color: rgba(245, 249, 250, 1)">
-        <el-card style="height:100%;width:100%;">
+        <el-card style="height:max-content;width:100%;">
         <div style="margin-left: 3%; margin-top: 3%; margin-right: 5%;">
             <el-form-item label="活动名称" style="margin-bottom: 3%; width:500px;">
                 <el-input v-model="this.activity.act_name" 
@@ -15,14 +15,30 @@
                  placeholder="请输入活动名称"></el-input>
             </el-form-item>
 
+            <el-form-item label="活动图片">
+            <div style="text-align: left;">
+            <el-upload
+            class="avatar-uploader"
+            action
+            :auto-upload="false"
+		        ref="upload"
+            :show-file-list="false"
+            :on-change="onUploadChange">
+            <img v-if="this.activity.imageurl" :src="this.activity.imageurl" class="avatar">
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            </el-upload>  
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5M</div>
+            </div>
+        </el-form-item>
+
             <el-form-item label="活动内容" style="margin-bottom: 3%; margin-top: 2%">
                 <el-input v-model="activity.act_content" 
                  :autosize="{ minRows: 10}"
                  type="textarea"
-                 placeholder="请输入文章内容"></el-input>
+                 placeholder="请输入活动内容"></el-input>
             </el-form-item>
 
-            <el-form-item label="活动内容" style="margin-bottom: 3%; margin-top: 2%">
+            <el-form-item label="志愿机构" style="margin-bottom: 3%; margin-top: 2%">
                 <el-select v-model="activity.volInst_Id" filterable placeholder="志愿机构">
                     <el-option
                     v-for="item in volInstOptions"
@@ -36,7 +52,6 @@
 
             <el-form-item label="活动人数" style="margin-bottom: 3%; width: 200px;">
                 <el-input v-model="activity.need_people"
-                 @blur="activity.need_people=Number(activity.need_people)"
                  type="number"
                  placeholder="请输入活动人数"></el-input>
             </el-form-item>
@@ -99,7 +114,8 @@
               act_area:'',
               act_address:'',
               contact_method:'',
-              volInst_Id:''
+              volInst_Id:'',
+              imageurl:'',
             },
             volInstOptions:[],
             value1: [],
@@ -124,9 +140,25 @@
             console.log(this.activity)
             this.activity.act_time=this.formatDateValue(this.value1[0])
             console.log(this.activity.act_time)
-            api.releaseVolActivity(this.activity.act_name,this.activity.act_content,this.formatDateValue(this.value1[0]),this.activity.need_people,this.activity.act_province,this.activity.act_city,this.activity.act_area,this.activity.act_address,this.activity.contact_method,this.activity.volInst_Id)
+            api.releaseVolActivity(this.activity.act_name,this.activity.act_content,this.formatDateValue(this.value1[0]),Number(this.activity.need_people),this.activity.act_province,this.activity.act_city,this.activity.act_area,this.activity.act_address,this.activity.contact_method,this.activity.volInst_Id)
               .then(res =>{
-                  console.log(res.data);  
+                  console.log(res.data); 
+                  if(res.data.status==true)
+                  {
+                    api.addVolActivityPic(this.admin_id,this.activity.imageurl)
+                    this.$message({
+                        type: 'success',
+                      message: '发布成功!'
+                      })
+                      Object.assign(this.$data, this.$options.data.call(this));
+                  }
+                  else
+                  {
+                    this.$message({
+                        type: 'error',
+                      message: '发布失败'
+                      });
+                  } 
             })
           },
 
@@ -147,6 +179,28 @@
                     time = "" + "0" + time;
                 }
                 return time;
+            },
+
+             //选择上传图片
+            onUploadChange(file)
+            {
+              const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png'|| file.raw.type === 'image/gif');
+              const isLt1M = file.size / 1024 / 1024 < 5;
+
+              if (!isIMAGE) {
+                this.$message.error('上传文件只能是图片格式!');
+                return false;
+              }
+              if (!isLt1M) {
+                this.$message.error('上传文件大小不能超过 5MB!');
+                return false;
+              }
+              var reader = new FileReader();
+              reader.readAsDataURL(file.raw);
+              reader.onload = (e) => {
+                  this.activity.imageurl = e.target.result;
+                  console.log(this.activity.imageurl)//图片的base64数据
+              }
             },
         },
     }

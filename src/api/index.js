@@ -14,6 +14,11 @@ const api = {
         return axios.post(path.baseUrl+path.releaseVolActivity,{act_name:act_name,act_content:act_content,act_time:act_time,need_people:need_people,
             act_province:act_province,act_city:act_city,act_area:act_area,act_address:act_address,contact_method:contact_method,volInst_Id:volInst_Id})
     },
+    //发布志愿活动图片
+    addVolActivityPic(volAct_id,volAct_pic)
+    {
+        return axios.put(path.baseUrl+path.addVolActivityPic,{volAct_id:volAct_id,volAct_pic:volAct_pic})
+    },
     //1.1-3返回所有志愿机构id和名称
     getAllVolInst()
     {
@@ -23,7 +28,7 @@ const api = {
     changeUserInfo(user_id,user_name,user_phone,user_email,user_province,user_city,user_area,user_address){
         return axios.put(path.baseUrl+path.changeUserInfo,{user_id:user_id,user_name:user_name,user_phone:user_phone,user_email:user_email,user_province:user_province,user_city:user_city,user_area:user_area,user_address:user_address})
     },
-
+    //上传头像
     uploadAvator(user_id,user_head){
         return axios.put(path.baseUrl+path.uploadAvator,{user_id:user_id,user_head:user_head})
     },
@@ -35,23 +40,37 @@ const api = {
         return axios.put(path.baseUrl+path.addNewsCover,{news_id:news_id,news_cover:news_cover})
 
     },
+    //2.1 展示用户发布的所有寻人信息
+    getAllSearchInfoPublished(user_id,pageNum,pageSize)
+    {
+        return axios.get(path.baseUrl+path.getAllSearchInfoPublished,{params:{user_id:user_id,pageNum:pageNum,pageSize:pageSize}})
+    },
     //2.2 展示用户发布的所有寻人线索
     getAllCLuesPublished(user_id,pageNum,pageSize)
     {
         return axios.get(path.baseUrl+path.getAllCLuesPublished,{params:{user_id:user_id,pageNum:pageNum,pageSize:pageSize}})
     },
-    //3.2 展示志愿者报名的所有志愿活动
-    getVolAct(volid,pagenum,pagesize)
+    //2.3 展示用户关注的所有寻人信息
+    getFollowInfo(user_id,pagenum,pagesize)
     {
-        return axios.get(path.baseUrl+path.getVolAct,{params:{volid:volid,pagenum:pagenum,pagesize:pagesize}})
+        return axios.get(path.baseUrl+path.getFollowInfo,{params:{userid:user_id,pagenum:pagenum,pagesize:pagesize}})
+    },
+    //3.1 展示志愿者跟进的所有寻人信息
+    getFollowUpInfo(volid,pagenum,pagesize)
+    {
+        return axios.get(path.baseUrlh+path.getFollowUpInfo,{params:{volid:volid,pagenum:pagenum,pagesize:pagesize}})
+    },
+    //3.2 展示志愿者报名的所有志愿活动
+    getVolApplyAct(volid,pagenum,pagesize)
+    {
+        return axios.get(path.baseUrlh+path.getVolApplyAct,{params:{volid:volid,pagenum:pagenum,pagesize:pagesize}})
     },
 
 
-
-    //4.1.1 获取志愿活动
-    getVolAct() {
-        return axios.get(path.baseUrl + path.volAct)
-    },
+    // //4.1.1 获取志愿活动
+    // getVolAct() {
+    //     return axios.get(path.baseUrl + path.volAct)
+    // },
     //4.1.2 获取志愿活动详细信息
     getVolActInfo(act_id) {
         //return axios.get(path.volActInfo, { params: { volAct_id: actID } })
