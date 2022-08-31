@@ -15,10 +15,10 @@
         <span style="text-align: center">搜索</span>
       </el-col>
       <el-col :span="7">
-        <el-input></el-input>
+        <el-input placeholder="请输入要搜索的用户昵称" v-model="search_content" clearable @clear="returnToNol"></el-input>
       </el-col>
       <el-col :span="2">
-        <el-button type="primary" :icon="Search">search</el-button>
+        <el-button slot="append" type="primary" :icon="Search" @click="getUserByName">search</el-button>
       </el-col>
     </el-row>
   </el-card>
@@ -78,6 +78,8 @@ export default {
           pagenum: 1,  //页数
           pagesize: 5, //每页的数量
           total:0,  //总条目数
+          search_content: "",
+          in_search: false,
         }
     },
     mounted(){
@@ -87,6 +89,20 @@ export default {
       getAllNorUser(){
         api.getAllNorUser(this.pagenum,this.pagesize).then(res =>{
             //console.log(res.data);
+            this.tableData=res.data.data.user_info;
+            this.total=res.data.data.total;
+        })
+      },
+      returnToNol()
+      {
+        console.log("11111111");
+        this.in_search=false;
+        this.getAllNorUser();
+      },
+      getUserByName(){
+        api.getUserByName(this.search_content,this.pagenum,this.pagesize).then(res =>{
+            //console.log(res.data);
+            this.in_search=true;
             this.tableData=res.data.data.user_info;
             this.total=res.data.data.total;
         })
@@ -127,12 +143,18 @@ export default {
       handleSizeChange(newSize){
         //console.log(newSize);
         this.pagesize = newSize;//重新指定每页数据量
-        this.getAllNorUser();//带着新的分页请求获取数据
+        if(this.in_search)
+          this.getUserByName();
+        else
+          this.getAllNorUser();//带着新的分页请求获取数据
       },
       handleCurrentChange(newPage){
         //console.log(newPage);
         this.pagenum = newPage;//重新指定当前页
-        this.getAllNorUser();
+        if(this.in_search)
+          this.getUserByName();
+        else
+          this.getAllNorUser();
       }
     }
 };

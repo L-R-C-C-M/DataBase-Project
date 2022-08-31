@@ -78,6 +78,10 @@ const routes = [
       {
         path:"UserHomePage",
         component:() => import('../views/Backstage/UserHomePage.vue')
+      },
+      {
+        path:"ApplyVol",
+        component:() => import('../views/Backstage/ApplyVol.vue')
       }
     ]
   },

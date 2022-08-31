@@ -36,7 +36,8 @@ const instance = axios.create({
 
 //拦截器最常用的
 
-//发送数据之前
+/*
+//发送数据之
 instance.interceptors.request.use(
     config =>{
         if(config.method == "post"){
@@ -48,7 +49,7 @@ instance.interceptors.request.use(
     error =>{
         return Promise.reject(error)
     }
-)
+)*/
 
 //获取数据之前
 instance.interceptors.response.use(

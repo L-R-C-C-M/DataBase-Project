@@ -17,6 +17,12 @@
         <el-icon><setting /></el-icon>
         <span>个人信息</span>
       </el-menu-item>
+
+      <el-menu-item index="/UserBackstage/ApplyVol">
+        <el-icon><setting /></el-icon>
+        <span>申请成为志愿者</span>
+      </el-menu-item>
+
     </el-menu>
   </el-aside>
 </template>
