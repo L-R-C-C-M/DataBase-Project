@@ -10,7 +10,7 @@
     <el-card style="height:max-content;margin-bottom:2%">
         <div style="text-align: left; margin-left: 3%">
             <h3>我发布的寻人信息</h3>
-            <div class="containerFlex" style="margin-bottom:2%">
+            <div class="containerFlex" style="margin-bottom:10px">
               <!-- 使用flex布局 -->
               <div
                 class="PhotoContainer"
@@ -61,6 +61,9 @@
             </el-col>
           </el-row>
         </div>
+        <div style="margin-top:15px;text-align: center;">
+            <el-button type="primary" size="small" @click="deleteInfo(item.SearchinfoId)">删 除</el-button>
+      </div>
       </div>
     </div>
     <div class="Parent">
@@ -82,7 +85,18 @@
             <el-card>
                 <el-table :data="clue_list" style="width: 100%" header-align="center">
                 <el-table-column prop="ClueDate" label="发布时间" width="200" align="center"/>
-                <el-table-column prop= "ClueContent" label="线索内容" align="center">
+                <el-table-column prop= "ClueContent" label="线索内容" align="center"/>
+                <el-table-column fixed="right" label="操作" width="120">
+                  <template #default="scope">
+                    <el-button
+                      link
+                      type="primary"
+                      size="small"
+                      @click.prevent="deleteClue(scope.$index)"
+                    >
+                      删除
+                    </el-button>
+                  </template>                
                 </el-table-column>
                 </el-table>
                 <div class="Parent">
@@ -118,7 +132,7 @@
               <div class="thePhoto" style="margin-left: 10%">
                 <img
                   fit="cover"
-                  style="width: 100%;height:100%;border-radius: 10px 10px 0 0;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;"
+                  style="width: 100%;height:100%;border-radius: 10px 10px 0 0;"
                   src="item.search_info_photourl"
                 >
               </div>
@@ -200,6 +214,61 @@ export default {
       this.getFollowInfo();
     },
     methods:{
+      //删除线索
+      deleteClue(index)
+      {
+        console.log(index)
+        api.userDeleteClue(this.user_id,this.clue_list[index].ClueId)
+        .then(res =>{
+                console.log(res.data);
+                this.getAllCLuesPublished();
+                this.getAllSearchInfo();
+                this.getFollowInfo();
+                if(res.data.status==true)
+                  {
+                    Object.assign(this.$data, this.$options.data.call(this));
+                    this.$message({
+                        type: 'success',
+                      message: '删除成功!'
+                      })
+                  }
+                  else
+                  {
+                    this.$message({
+                        type: 'error',
+                      message: '删除失败'
+                      });
+                  } 
+              })
+      },
+      //删除寻人信息
+      deleteInfo(info_id)
+      {
+        console.log(info_id)
+        console.log("info_id")
+        api.userDeleteInfo(this.user_id,info_id)
+        .then(res =>{
+                console.log(res.data);
+                this.getAllCLuesPublished();
+                this.getAllSearchInfo();
+                this.getFollowInfo();
+                if(res.data.status==true)
+                  {
+                    this.$message({
+                        type: 'success',
+                      message: '删除成功!'
+                      })
+                      Object.assign(this.$data, this.$options.data.call(this));
+                  }
+                  else
+                  {
+                    this.$message({
+                        type: 'error',
+                      message: '删除失败'
+                      });
+                  } 
+              })
+      },
         //处理返回时间中的T
         handleTimeString(clue_list)
       {
@@ -294,7 +363,6 @@ export default {
     border-radius: 4px;
     box-shadow: 1px 1px 5px#e2e1e1,1px -1px 5px#e2e1e1,-1px 1px 5px#e2e1e1,-1px -1px 5px#e2e1e1;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 .el-row:last-child {

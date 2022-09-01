@@ -19,7 +19,7 @@
               :show-file-list="false"
               :on-change="onUploadChange"
           >
-            <img v-if="this.form.user_head" :src="this.form.user_head" class="avatar">
+            <img v-if="this.form.user_head" :src="form.user_head" class="avatar">
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
           <el-upload v-if="isEdit"

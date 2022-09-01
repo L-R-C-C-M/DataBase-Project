@@ -65,29 +65,17 @@ const api = {
     {
         return axios.get(path.baseUrlh+path.getVolApplyAct,{params:{volid:volid,pagenum:pagenum,pagesize:pagesize}})
     },
-
-
-    // //4.1.1 获取志愿活动
-    // getVolAct() {
-    //     return axios.get(path.baseUrl + path.volAct)
-    // },
-    //4.1.2 获取志愿活动详细信息
-    getVolActInfo(act_id) {
-        //return axios.get(path.volActInfo, { params: { volAct_id: actID } })
-        return axios.get(path.baseUrl + path.volActInfo, { params: { VolActId: act_id } })
+    //用户删除自己发布的寻人信息
+    userDeleteInfo(userid,infoid)
+    {
+        return axios.delete(path.baseUrlh+path.userDeleteInfo,{params:{userid:userid,infoid:infoid}})
     },
-    //4.2.1 获取志愿机构
-    getVolInst() {
-        return axios.get(path.baseUrl + path.volInst)
-    },
-    //4.2.2 获取志愿机构详细信息
-    getVolInstInfo(inst_id) {
-        return axios.get(path.baseUrl + path.volInstInfo, { params: { VolInstId: inst_id } })
-    },
-    //4.3.1 获取志愿时长排在前10的志愿者信息
-    getVolRank() {
-        return axios.get(path.baseUrl + path.volRank)
+    ////用户删除自己发布的寻人线索
+    userDeleteClue(userid,clueid)
+    {
+        return axios.delete(path.baseUrlh+path.userDeleteClue,{params:{userid:userid,clueid:clueid}})
     }
+
 }
 
 export default api;

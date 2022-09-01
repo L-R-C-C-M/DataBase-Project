@@ -28,22 +28,11 @@ const base = {
     getFollowUpInfo:"/api/Vol/GetFollowUpInfo",
     //3.2 展示志愿者报名的所有志愿活动
     getVolApplyAct:'/api/Vol/GetVolAct',
+    //用户删除自己发布的寻人信息
+    userDeleteInfo:"/api/User/UserDeleteInfo",
+    //用户删除自己发布的寻人线索
+    userDeleteClue:"/api/User/UserDeleteClue"
 
-
-     //4.1.1 获取志愿活动
-    //volAct: "/api/volAct",
-    volAct: "/api/Vol/ShowVolActivityList",
-    //4.1.3 获取志愿活动详细信息
-    //volActInfo: "/api/volActInfo",
-    volActInfo: "/api/Vol/ShowSingleVolActivity",
-    //4.2.1 获取志愿机构
-    //volInst: "/api/volInst",
-    volInst: "/api/Vol/ShowAllVolInstitution",
-    //4.2.2 获取志愿机构详细信息
-    //volInstInfo: "/api/volInstInfo",
-    volInstInfo: "/api/Vol/ShowSingleVolInstitution",
-    //4.3.1 获取志愿时长排在前10的志愿者信息
-    volRank: "/api/Vol/ShowTenVolunteer"
 }
 
 export default base;

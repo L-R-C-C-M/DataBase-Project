@@ -14,10 +14,6 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
-  {
-    path:"/volunActInfo",
-    component:() => import('../views/VolunActInfoView.vue')
-  },
   //管理员后台//
   {
     path: '/backstage',
