@@ -64,7 +64,7 @@
             admin_id:4,
             review_status:0,  //0：未申请 1：已申请  2：已审核未通过   3：已审核通过
             apply_content:{
-              UserId: 609,
+              UserId: 610,
               Specialty: '',
               Background: '',
               Career: '',
