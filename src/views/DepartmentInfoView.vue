@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       icon: ">>",
+      
     };
   },
 };

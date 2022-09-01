@@ -1,197 +1,210 @@
 <template>
-    <div>
-        <!--class="common-layout"-->
-        <el-container class="detail-view" style="height:700px;">
-            <el-header style="height:55px;">
-                <el-menu :default-active="this.$router.path" router class="up-menu" mode="horizontal"
-                    background-color="#202741" text-color="#FFFFFF" active-text-color="#2E74B6" :ellipsis="false"
-                    @select="handleSelect">
-                    <el-image style="height:70%;width:20%;" :src="require('../../image/logo.png')" fit="contain" />
-                    <div class="flex-grow" />
-                    <el-menu-item index="0">寻人首页</el-menu-item>
-                    <el-menu-item index="/VolunOver">志愿活动</el-menu-item>
-                    <el-menu-item index="2">寻人资讯</el-menu-item>
-                    <el-menu-item index="3">相关部门信息</el-menu-item>
-                    <el-menu-item index="4">登录</el-menu-item>
-                </el-menu>
-            </el-header>
-            <el-main>
-                <el-row>
-                    <el-button @click="goBack()" type="text" class="return">&lt;&lt;返回</el-button>
-                    <!--el-button @click="prev()">返回</!--el-button-->
-                </el-row>
-                <el-row>
-                    <el-image
-                        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                        class="image" />
-                    <!--el-card :body-style="{ padding: '0px' }" shadow="never"-->
-                    <div>
-                        <div class="title">"宝贝回家"志愿活动</div>
-                        <div class="info">
-                            <div>项目编号：</div>
-                            <div>招募人数：</div>
-                            <div>服务时间：</div>
-                            <div>服务地点：</div>
-                            <div>发起机构：</div>
-                        </div>
-                        <!--div v-for="o in 5" :key="o" class="text item">{{ 'List item ' + o }}</!--div-->
-                        <el-button type="primary" class="actButton" round>我要报名</el-button>
-                    </div>
-                    <!--/el-card-->
-                </el-row>
-                <el-col class="toptext">活动详情</el-col>
-                <el-divider />
-                <div class="text">
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
-                    这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~这里是活动详情~~~~
+  <div style="min-width: 500px">
+    <!--class="common-layout"-->
+    <el-container style="height: fit-content">
+      <el-header class="myHeader3">
+        <MainHeader />
+      </el-header>
+      <el-main>
+        <el-row class="search">
+          <el-input
+            v-model="input"
+            placeholder="Please Input"
+            :suffix-icon="Search"
+          />
+        </el-row>
+        <el-col class="toptext">志愿活动</el-col>
+        <!--el-link class="linktext">更多>></!--el-link-->
+        <el-divider />
+        <el-row type="flex" justify="space-around" style="align-items: center">
+          <!--列元素居中-->
+          <el-col v-for="volitem in volActAll" :key="volitem.actID" :span="5">
+            <el-card
+              @click="goAct()"
+              class="mycard"
+              :body-style="{ padding: '0px' }"
+            >
+              <div class="bottom">
+                <div style="color: #67bbff; font-size: 15px; margin: 0 0 10px">
+                  {{ volitem.name }}
                 </div>
-            </el-main>
-            <el-footer>
-                <el-image style="height:70%;width:20%;" :src="require('../../image/logo.png')" fit="contain" />
-                <span style="display:block;text-align:right;">客服 : +7 700 000 000 <br /> yixun@163.edu</span>
-            </el-footer>
-        </el-container>
-    </div>
+                <div>位置：{{ volitem.addr }}</div>
+                <div>志愿时间：{{ volitem.date }}</div>
+                <div>人数：{{ volitem.tmpNum }}/{{ volitem.aimNum }}人</div>
+                <div>
+                  <el-button type="primary" class="button" round
+                    >了解详情</el-button
+                  >
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+
+          <!--el-col v-for="o in 4" :key="o" :span="5">
+            <el-card
+              @click="goAct()"
+              class="mycard"
+              :body-style="{ padding: '0px' }"
+            >
+              <div class="bottom">
+                <div style="color: #67bbff; font-size: 15px; margin: 0 0 10px">
+                  "宝贝回家"志愿活动
+                </div>
+                <div>位置：</div>
+                <div>志愿时间：</div>
+                <div>人数：</div>
+                <div>联系人：</div>
+                <div>
+                  <el-button type="primary" class="button" round
+                    >我要报名</el-button
+                  >
+                </div>
+              </div>
+            </el-card>
+          </!--el-col-->
+        </el-row>
+      </el-main>
+      <Footer></Footer>
+    </el-container>
+  </div>
 </template>
 
 <script>
+//import axios from "axios";
+import api from "/src/api/index";
 import { ref } from "vue";
+import MainHeader from "@/views/Frontstage/MainHeader.vue";
+import Footer from "@/views/Frontstage/Footer.vue";
+import { Search } from "@element-plus/icons-vue";
 export default {
-    name: "ref",
-    setup() {
-        const currentDate = ref(new Date());
-        return {
-            currentDate,
-        }
+  name: "ref",
+  components: {
+    MainHeader,
+    Footer,
+    Search,
+  },
+  setup() {
+    const currentDate = ref(new Date());
+    const input = ref("");
+    let volActAll = ref([]);
+    //axios
+    //.get("/api/volAct")
+    api
+      .volAct()
+      .then((res) => {
+        console.log("请求成功", res);
+        volActAll.value = res.data.volActAll;
+        console.log("获取数据", volActAll);
+      })
+      .catch((err) => {
+        console.log("请求失败", err);
+      });
+    return {
+      currentDate,
+      input,
+      volActAll,
+    };
+  },
+  methods: {
+    goAct() {
+      //跳转至活动详情页面
+      this.$router.push({ path: "/volunActInfo", query: { index: "1" } });
     },
-     methods: {
-        goBack() {
-             this.$router.back();
-        }
-    }
+  },
+  // watch: {
+  //   // input(e) {
+  //   // }
+  // },
 };
 </script>
 
-<style>
-
-
-
-/*.el-header.myHeader {
-    position: relative;
-    height: 50px;
-    width: 100%;
-    text-align: center;
-    line-height: 60px;
-    background-image: none;
-    background-color:#32495E;
-}*/
-
-.detail-view .el-header {
-    background-color: #202741;
-    color: #FFFFFF;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-.up-menu {
-    height: 55px;
-    width: 100%;
-    align-items: center;
-}
-.flex-grow {
-    flex-grow: 1;
+<style scoped>
+.myHeader3 {
+  height: 300px;
+  background-image: url(../../image/volun.png);
+  background-size: cover;
 }
 .el-main {
-    background-color: #F4F6F9;
-    position: relative;
-    padding: 2% 5% 2%;
-    width: 100%;
-}
-.el-footer {
-    background-color: #202741;
-    color: #dddcdc;
-    height: 40px;
-    font-size: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.return {
-    float: left;
-    color: grey;
-    font-size: 15px;
-    margin-bottom: 30px;
-}
-.image {
-    object-fit: contain;
-    width: 40%;
-    height: 300px;
-    margin-right: 50px;
-    /*display: block;*/
-}
-.title {
-    text-align: left;
-    font-size: 30px;
-    color: #2E74B6;
-    line-height: 50px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-.info {
-    padding: 14px;
-    text-align: left;
-    font-size: 14px;
-    line-height: 30px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-.actButton {
-    float: left;
-    background-color: #67BBFF;
-    padding: 0px;
-    min-height: auto;
-    margin-top: 10px;
-    margin-bottom: 5px;
+  background-color: #f4f6f9;
+  position: relative;
+  padding: 2% 5% 2%;
+  width: 100%;
 }
 .toptext {
-    margin-top: 50px;
-    height: 30px;
-    text-align: left;
-    color: #2E74B6;
-    font-size: 30px;
-}/*格式调整*/
+  height: 30px;
+  text-align: left;
+  color: #2e74b6;
+  font-size: 30px;
+} /*格式调整*/
+.linktext {
+  float: right;
+  text-align: right;
+  color: grey;
+  font-size: 12px;
+}
 .el-divider {
-    background-color: #67BBFF;
-    /*height: 36px;*/
-    margin: 20px 0;
+  background-color: #67bbff;
+  /*height: 36px;*/
+  margin: 20px 0;
 }
-.text{
-    padding-left:20px;
-    padding-right:20px;
-    text-align: left;
-}
-
 /*.card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }*/
+.search {
+  float: right;
+  text-align: right;
+  width: 250px;
+}
+.mycard {
+  border-radius: 10%;
+  background-color: #ffffff;
+  background-image: url(../assets/hands.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 10px;
+}
 
+/*.text {
+  text-align:left;
+  font-size: 14px;
+}
+.item {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.time {
+  font-size: 12px;
+  color: #999;
+}*/
+.bottom {
+  border-radius: 10%;
+  background-color: #ffffff;
+  padding: 14px;
+  text-align: left;
+  font-size: 10px;
+  line-height: 18px;
+  margin-top: 50%;
+  margin-bottom: 5px;
+}
 /*.bottom {
-    line-height: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  line-height: 12px;
+  display: flex;
+  justify-content: space-between;/*在主轴上的对齐方式
+  align-items: center;/*在交叉轴上的对齐方式 
+}*/
+.button {
+  float: right;
+  background-color: #67bbff;
+  padding: 0px;
+  width: 40%;
+  min-height: fit-content;
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+/*.cardImage {
+  width: 100%;
+  display: block;
 }*/
 </style>
