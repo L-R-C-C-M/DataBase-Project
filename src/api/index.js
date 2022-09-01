@@ -19,6 +19,10 @@ const api = {
     deleteUser(userid){
         return axios.delete(path.baseUrl0+path.deleteUser,{params:{userid:userid}})
     },
+    //1.6.1 删除资讯
+    deleteNews(newsid){
+        return axios.delete(path.baseUrl0+path.deleteNews,{params:{newsid:newsid}})
+    },
     //1.4.3 搜索
     getUserByName(word,pagenum,pagesize){
         return axios.get(path.baseUrl0+path.userByName,{params:{word:word,pagenum:pagenum,pagesize:pagesize}})

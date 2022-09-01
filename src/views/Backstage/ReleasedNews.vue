@@ -33,7 +33,7 @@
       <el-table-column prop="operation" label="操作" align="center">
         <template v-slot="scope">
           <el-button type="danger" icon="DeleteFilled" size="small"
-          @click="deleteUser(scope.row)" disabled>删除</el-button>
+          @click="deleteNews(scope.row)">删除</el-button>
         </template>
       </el-table-column>
       </el-table>
@@ -77,22 +77,22 @@ export default {
             this.total=res.data.data.total;
         })
       },
-      async deleteUser(userinfo){
-        //console.log(userinfo.user_id);
-        /*if(userinfo.isactive=='N')
+      async deleteNews(userinfo){
+        if(userinfo.Isactive=='N')
         {
-          alert("用户已被删除！");
+          alert("资讯已被删除！");
           return;
         }
-        if(confirm("您确定要删除该用户吗？")){
-        await api.deleteUser(userinfo.user_id).then(res =>{
-          this.$message.success('删除用户成功！');
-          this.getAllNorUser();
+        console.log(userinfo.news_id);
+        if(confirm("您确定要删除这条资讯吗？")){
+        await api.deleteNews(userinfo.news_id).then(res =>{
+          this.$message.success('删除资讯成功！');
+          this.getAllNews();
         }).catch(err=>{
           console.log(err)
-          this.$message.error('删除用户失败！');
+          this.$message.error('删除资讯失败！');
         })
-        }*/
+        }
       },
       handleSizeChange(newSize){
         //console.log(newSize);

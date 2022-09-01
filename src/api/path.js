@@ -47,6 +47,8 @@ const base = {
     allVol: "/api/Admin/GetAllVol",
     //1.6 资讯管理
     allNews: "/api/Admin/GetAllNews",
+    //1.6.1 删除资讯
+    deleteNews:"/api/Admin/DeleteNews",
     //1.7.1 获得审核数量
     volApplyCount: "/api/Admin/GetVolApplyCount",
     //1.7.2 获得需要审核的志愿者信息
