@@ -1,8 +1,9 @@
-<!-- @author:何懿励-志愿者审核-->
+<!-- @author:何懿励-处理举报-->
 <template>
   <el-header>
     <el-breadcrumb separator="/">
-    <el-breadcrumb-item>志愿者审核</el-breadcrumb-item>
+      <el-breadcrumb-item>处理举报</el-breadcrumb-item>
+    <el-breadcrumb-item>线索举报</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
@@ -16,8 +17,8 @@
         </el-icon>
     </div>
     <div style="padding-left:20px;">
-      <span style="font-size:large;">待审核<br/><br/></span>
-        <span style="font-size:xx-large;">{{vol_apply_notreviewed}}</span>
+      <span style="font-size:large;">待处理线索<br/><br/></span>
+        <span style="font-size:xx-large;">{{clue_repo_notreviewed}}</span>
     </div>
     </div>
     </el-col>
@@ -30,30 +31,27 @@
       </el-icon>
       </div>
       <div style="padding-left:20px;">
-        <span style="color: #FFFFFF;font-size:large;">已审核<br/><br/></span>
-        <span style="color: #FFFFFF;font-size:xx-large;">{{vol_apply_reviewed}}</span>
+        <span style="color: #FFFFFF;font-size:large;">已处理线索<br/><br/></span>
+        <span style="color: #FFFFFF;font-size:xx-large;">{{clue_repo_reviewed}}</span>
       </div>
     </div>
-    
     </el-col>
   </el-row>
 
   <el-card>
       <el-table :data="tableData" style="width: 100%" header-align="center">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column prop="vol_apply_id" label="申请者ID" align="center"/>
-      <el-table-column prop="user_id" label="用户ID" align="center"/>
-      <el-table-column prop= "user_name" label="用户名" align="center"/>
-      <el-table-column prop= "career" label="职业" align="center"/>
-      <el-table-column prop= "specialty" label="特长" align="center"/>
-      <el-table-column prop= "background" label="背景" align="center"/>
-      <el-table-column prop= "background" label="背景" align="center"/>
+      <el-table-column prop="clue_repo_id" label="线索举报编号" align="center"/>
+      <el-table-column prop= "clue_id" label="线索编号" align="center"/>
+      <el-table-column prop="user_id" label="举报人编号" align="center"/>
+      <el-table-column prop= "repo_content" label="举报内容" align="center"/>
+      <el-table-column prop= "repo_time" label="举报时间" align="center"/>
       <el-table-column prop="operation" label="操作" align="center">
         <template v-slot="scope">
           <el-button type="success" plain size="small"
-          @click="passVol(scope.row)">通过</el-button>
+          @click="passRepo(scope.row)">通过</el-button>
           <el-button type="danger" plain size="small"
-          @click="rejectVol(scope.row)">拒绝</el-button>
+          @click="rejectRepo(scope.row)">拒绝</el-button>
         </template>
       </el-table-column>
       </el-table>
@@ -84,50 +82,47 @@ export default {
           pagenum: 1,  //页数
           pagesize: 5, //每页的数量
           total:0,  //总条目数
-          vol_apply_notreviewed:0,
-          vol_apply_reviewed:0,
+          clue_repo_notreviewed:0,
+          clue_repo_reviewed:0,
           adminId:1,
         }
     },
     mounted(){
-      this.getVolApplyCount();
-      this.getVolApplyReviewed();
+      this.getClueRepoCount();
+      this.getClueRepoReviewed();
     },
     methods:{
-      getVolApplyCount(){
-        api.getVolApplyCount(this.adminId).then(res =>{
-            console.log(res.data.data.vol_apply_review);
-            //this.tableData=res.data.data.user_info;
-            this.vol_apply_notreviewed=res.data.data.vol_apply_review[0].vol_apply_notreviewed;
-            this.vol_apply_reviewed=res.data.data.vol_apply_review[0].vol_apply_reviewed;
+      getClueRepoCount(){
+        api.getClueRepoCount(this.adminId).then(res =>{
+            this.clue_repo_notreviewed=res.data.data.clue_repo_review[0].clue_repo_notreviewed;
+            this.clue_repo_reviewed=res.data.data.clue_repo_review[0].clue_repo_reviewed;
         })
       },
-      getVolApplyReviewed(){
-        api.getVolApplyReviewed(this.adminId,this.pagenum,this.pagesize,'N').then(res =>{
+      getClueRepoReviewed(){
+        api.getClueRepoReviewed(this.adminId,this.pagenum,this.pagesize,'N').then(res =>{
             console.log(res.data);
-            this.tableData=res.data.data.vol_apply;
+            this.tableData=res.data.data.clue_repo;
             this.total=res.data.data.total;
         })
       },
-      async passVol(userinfo){
-        if(confirm("您确定要通过该用户的申请吗？")){
-        await api.passVolApply(userinfo.vol_apply_id).then(res =>{
+      async passRepo(userinfo){
+        if(confirm("您确定要通过该举报吗？")){
+        await api.passClueRepo(userinfo.clue_id).then(res =>{
           this.$message.success('审核成功！');
-          this.getVolApplyCount();
-          this.getVolApplyReviewed();
+          this.getClueRepoCount();
+          this.getClueRepoReviewed();
         }).catch(err=>{
-          console.log(err)
-          //userinfo.user_state=(userinfo.user_state=='Y'?'N':'Y');//操作失败状态恢复
+          console.log(err);
           this.$message.error('审核失败！');
         })
       }
       },
-      async rejectVol(userinfo){
-        if(confirm("您确定要拒绝该用户的申请吗？")){
-        await api.denyVolApply(userinfo.vol_apply_id).then(res =>{
+      async rejectRepo(userinfo){
+        if(confirm("您确定要驳回该举报吗？")){
+        await api.denyClueRepo(userinfo.clue_repo_id).then(res =>{
           this.$message.success('审核成功！');
-          this.getVolApplyCount();
-          this.getVolApplyReviewed();
+          this.getClueRepoCount();
+          this.getClueRepoReviewed();
         }).catch(err=>{
           console.log(err)
           this.$message.error('审核失败！');
@@ -137,12 +132,12 @@ export default {
       handleSizeChange(newSize){
         //console.log(newSize);
         this.pagesize = newSize;//重新指定每页数据量
-        this.getVolApplyReviewed();//带着新的分页请求获取数据
+        this.getClueRepoReviewed();//带着新的分页请求获取数据
       },
       handleCurrentChange(newPage){
         //console.log(newPage);
         this.pagenum = newPage;//重新指定当前页
-        this.getVolApplyReviewed();
+        this.getClueRepoReviewed();
       }
     }
 };

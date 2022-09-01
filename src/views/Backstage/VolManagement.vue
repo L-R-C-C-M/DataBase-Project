@@ -27,22 +27,26 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column prop="user_id" label="用户ID" align="center"/>
       <el-table-column prop="user_name" label="用户昵称" align="center"/>
-      <el-table-column prop= "phone_num" label="手机号" align="center"/>
-      <el-table-column prop= "report_num" label="举报数量" align="center"/>
-      <el-table-column prop= "searchinfo_num" label="发布寻人信息数量" align="center"/>
+      <el-table-column prop= "phone_num" label="电话" align="center"/>
+      <el-table-column prop= "mail_num" label="邮箱" align="center"/>
+      <el-table-column prop= "vol_id" label="志愿者编号" align="center"/>
+      <el-table-column prop= "vol_time" label="志愿时长" align="center"/>
       <el-table-column prop= "fundation_time" label="创建时间" align="center"/>
-      <el-table-column prop= "validate" label="账户" align="center">
-        <template #default>
-        <el-switch v-model="value1" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="operation" label="操作" align="center">
-        <template #default="scope">
-        <el-button size="small">Edit</el-button>
-        <el-button size="small">Delete</el-button>
-        </template>
-      </el-table-column>
+      <el-table-column prop= "inst_name" label="志愿机构名" align="center"/>
+      <el-table-column prop= "info_followup_num" label="跟进寻人信息数量" align="center"/>
+      <el-table-column prop= "act_num" label="参与活动数量" align="center"/>
       </el-table>
+
+      <!--分页-->
+      <el-pagination
+      v-model:currentPage="pagenum"
+      v-model:page-size="pagesize"
+      :page-sizes="[1, 2, 5, 10]"
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      />
   </el-card>
   
   </el-main>
@@ -50,21 +54,40 @@
  
 <script>
 import { ref } from 'vue'
+import api from "/src/api/index"
 const value1 = ref(true)
 export default {
     data() {
         return {
-            tableData: [{
-        user_id: '20202020',
-        user_name: 'Tom',
-        phone_num: '28098908123',
-        report_num: '3018239',
-        searchinfo_num: '4',
-        fundation_time: '2020-12-2',
-            }]
+          tableData: [],
+          pagenum: 1,  //页数
+          pagesize: 5, //每页的数量
+          total:0,  //总条目数
         }
+    },
+    mounted(){
+      this.getAllVol();
+    },
+    methods:{
+      getAllVol(){
+        api.getAllVol(this.pagenum,this.pagesize).then(res =>{
+            //console.log(res.data);
+            this.tableData=res.data.data.vol_info;
+            this.total=res.data.data.total;
+        })
+      },
+      handleSizeChange(newSize){
+        //console.log(newSize);
+        this.pagesize = newSize;//重新指定每页数据量
+        this.getAllVol();//带着新的分页请求获取数据
+      },
+      handleCurrentChange(newPage){
+        //console.log(newPage);
+        this.pagenum = newPage;//重新指定当前页
+        this.getAllVol();
+      }
     }
-};
+  }
 </script>
 
 <style lang="less" scoped>

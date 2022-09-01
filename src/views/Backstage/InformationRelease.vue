@@ -162,20 +162,41 @@ h6{
     position: relative;
     overflow: hidden;
   }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
+  </script>
+  
+  <style>
+  h6{
+      color:rgb(184, 184, 184)
   }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-</style>
+  .el-header{
+       background-color: rgba(255, 255, 255, 1);
+       height:60px;
+       display: flex;
+       justify-content: space-between;
+       padding-left: 30;
+       align-items: center;
+   }
+    .avatar-uploader .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+      border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 178px;
+      height: 178px;
+      line-height: 178px;
+      text-align: center;
+    }
+    .avatar {
+      width: 178px;
+      height: 178px;
+      display: block;
+    }
+  </style>

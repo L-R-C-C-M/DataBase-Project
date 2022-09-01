@@ -40,10 +40,16 @@
             <span>志愿者审核</span>
       </el-menu-item>
 
-      <el-menu-item index="/backstage/reports">
-        <el-icon><MessageBox /></el-icon>
-        <span>举报处理</span>
-      </el-menu-item>
+      <el-sub-menu index="3">
+        <template #title>
+          <el-icon><MessageBox /></el-icon>
+          <span>举报处理</span>
+        </template>
+        <el-menu-item-group>
+            <el-menu-item index="/backstage/infoReports">寻人信息举报</el-menu-item>
+            <el-menu-item index="/backstage/clueReports">线索举报</el-menu-item>
+        </el-menu-item-group>
+      </el-sub-menu>
 
       <el-menu-item index="/backstage/PersonalInfo">
         <el-icon><setting /></el-icon>

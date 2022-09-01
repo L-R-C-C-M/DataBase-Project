@@ -46,9 +46,14 @@ const routes = [
         component: () => import('../views/Backstage/VolReview.vue')
       },
       {
-        path: 'reports',
-        name: 'reports',
-        component: () => import('../views/Backstage/Reports.vue')
+        path: 'infoReports',
+        name: 'infoReports',
+        component: () => import('../views/Backstage/InfoReports.vue')
+      },
+      {
+        path: 'clueReports',
+        name: 'clueReports',
+        component: () => import('../views/Backstage/ClueReports.vue')
       },
       {
         path:"InformationRelease",
@@ -78,6 +83,10 @@ const routes = [
       {
         path:"UserHomePage",
         component:() => import('../views/Backstage/UserHomePage.vue')
+      },
+      {
+        path:"ApplyVol",
+        component:() => import('../views/Backstage/ApplyVol.vue')
       }
     ]
   },

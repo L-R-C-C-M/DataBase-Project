@@ -2,6 +2,9 @@ import axios from "axios"
 import querystring from "querystring"
 const errorHandle = (status,info) =>{
     switch(status){
+        case 300:
+            console.log("多种选择");
+            break; 
         case 400:
             console.log("语义有误");
             break; 
