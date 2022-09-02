@@ -142,29 +142,6 @@ export default{
 </script>
 
 <style>
-h6{
-    color:rgb(184, 184, 184)
-}
-
-.el-header{
-     background-color: rgba(255, 255, 255, 1);
-     height:60px;
-     display: flex;
-     justify-content: space-between;
-     padding-left: 30;
-     align-items: center;
- }
-
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  </script>
-  
-  <style>
   h6{
       color:rgb(184, 184, 184)
   }
