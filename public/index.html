@@ -8,6 +8,12 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
+    <script>
+      window._AMapSecurityConfig = {
+          securityJsCode:'e838c78771f3c9c228afeb673406638d',
+      }
+  </script>
+   <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=a8eaad565d2a2a529b5d8093f8e19e98&jscode=e838c78771f3c9c228afeb673406638d"></script>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
